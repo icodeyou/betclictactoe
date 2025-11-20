@@ -1,4 +1,5 @@
 import 'package:betclictactoe/theme/colors.dart';
+import 'package:betclictactoe/ui/shared/widgets/app_back_button.dart';
 import 'package:flutter/material.dart' hide Colors;
 
 import 'custom_name_dialog.dart';
@@ -11,30 +12,31 @@ class SettingsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.backgroundSettings,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-          child: Column(
-            spacing: 60,
-            children: [
-              Row(
-                children: [
-                  BackButton(
-                    style: ButtonStyle(iconSize: WidgetStateProperty.all(50)),
-                  ),
-                  Expanded(
-                    child: const Text(
-                      'Settings',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Permanent Marker',
-                        fontSize: 55,
-                        height: 1,
-                      ),
+        child: Column(
+          spacing: 60,
+          children: [
+            Row(
+              children: [
+                AppBackButton(),
+                Expanded(
+                  child: const Text(
+                    'Settings',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Permanent Marker',
+                      fontSize: 55,
+                      height: 1,
                     ),
                   ),
-                ],
-              ),
-              Expanded(
+                ),
+              ],
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 24,
+                ),
                 child: ListView(
                   children: [
                     const _NameChangeLine('Name'),
@@ -57,9 +59,9 @@ class SettingsScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const Text('Music by Mr Smith'),
-            ],
-          ),
+            ),
+            const Text('Music by Mr Smith'),
+          ],
         ),
       ),
     );
