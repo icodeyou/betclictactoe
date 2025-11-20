@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/widgets.dart';
 
-/// Shows a confetti (celebratory) animation: paper snippings falling down.
+/// Shows a confetti (celebratory) animation: paper snipping falling down.
 ///
 /// The widget fills the available space (like [SizedBox.expand] would).
 ///

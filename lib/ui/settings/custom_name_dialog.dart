@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
-
-import 'settings.dart';
 
 void showCustomNameDialog(BuildContext context) {
   showGeneralDialog(
@@ -43,7 +40,7 @@ class _CustomNameDialogState extends State<CustomNameDialog> {
             textCapitalization: TextCapitalization.words,
             textInputAction: TextInputAction.done,
             onChanged: (value) {
-              context.read<SettingsController>().setPlayerName(value);
+              // TODO : Call notifier to change name
             },
             onSubmitted: (value) {
               // Player tapped 'Submit'/'Done' on their keyboard.
@@ -68,6 +65,6 @@ class _CustomNameDialogState extends State<CustomNameDialog> {
   @override
   void initState() {
     super.initState();
-    _controller.text = context.read<SettingsController>().playerName.value;
+    // TODO : Get name from notifier
   }
 }

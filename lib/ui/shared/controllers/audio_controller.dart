@@ -3,14 +3,12 @@ import 'dart:collection';
 import 'dart:math';
 
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/foundation.dart';
+import 'package:betclictactoe/app_lifecycle/app_lifecycle.dart';
+import 'package:betclictactoe/ui/shared/controllers/settings_controller.dart';
+import 'package:betclictactoe/utils/audio/songs.dart';
+import 'package:betclictactoe/utils/audio/sounds.dart';
 import 'package:flutter/widgets.dart';
 import 'package:logging/logging.dart';
-
-import '../app_lifecycle/app_lifecycle.dart';
-import '../settings/settings.dart';
-import 'songs.dart';
-import 'sounds.dart';
 
 /// Allows playing music and sound. A facade to `package:audioplayers`.
 class AudioController {
@@ -28,7 +26,7 @@ class AudioController {
 
   final Random _random = Random();
 
-  SettingsController? _settings;
+  SettingsController settingsController = SettingsController();
 
   ValueNotifier<AppLifecycleState>? _lifecycleNotifier;
 
@@ -49,19 +47,19 @@ class AudioController {
         (i) => AudioPlayer(playerId: 'sfxPlayer#$i'),
       ).toList(growable: false),
       _playlist = Queue.of(List<Song>.of(songs)..shuffle()) {
+    if (settingsController.audioOn.value && settingsController.musicOn.value) {
+      _playCurrentSongInPlaylist();
+    }
     _musicPlayer.onPlayerComplete.listen(_handleSongFinished);
     unawaited(_preloadSfx());
   }
 
+  // TODO : Use Riverpod instead
   /// Makes sure the audio controller is listening to changes
-  /// of both the app lifecycle (e.g. suspended app) and to changes
-  /// of settings (e.g. muted sound).
-  void attachDependencies(
-    AppLifecycleStateNotifier lifecycleNotifier,
-    SettingsController settingsController,
-  ) {
+  /// of both the app lifecycle (e.g. suspended app)
+  void attachDependencies(AppLifecycleStateNotifier lifecycleNotifier) {
     _attachLifecycleNotifier(lifecycleNotifier);
-    _attachSettings(settingsController);
+    _attachSettings();
   }
 
   void dispose() {
@@ -79,12 +77,12 @@ class AudioController {
   /// [SettingsController.audioOn] is `true` or if its
   /// [SettingsController.soundsOn] is `false`.
   void playSfx(SfxType type) {
-    final audioOn = _settings?.audioOn.value ?? false;
+    final audioOn = settingsController.audioOn.value;
     if (!audioOn) {
       _log.fine(() => 'Ignoring playing sound ($type) because audio is muted.');
       return;
     }
-    final soundsOn = _settings?.soundsOn.value ?? false;
+    final soundsOn = settingsController.soundsOn.value;
     if (!soundsOn) {
       _log.fine(
         () => 'Ignoring playing sound ($type) because sounds are turned off.',
@@ -119,41 +117,20 @@ class AudioController {
   /// Namely, when any of [SettingsController.audioOn],
   /// [SettingsController.musicOn] or [SettingsController.soundsOn] changes,
   /// the audio controller will act accordingly.
-  void _attachSettings(SettingsController settingsController) {
-    if (_settings == settingsController) {
-      // Already attached to this instance. Nothing to do.
-      return;
-    }
-
-    // Remove handlers from the old settings controller if present
-    final oldSettings = _settings;
-    if (oldSettings != null) {
-      oldSettings.audioOn.removeListener(_audioOnHandler);
-      oldSettings.musicOn.removeListener(_musicOnHandler);
-      oldSettings.soundsOn.removeListener(_soundsOnHandler);
-    }
-
-    _settings = settingsController;
-
+  void _attachSettings() {
     // Add handlers to the new settings controller
     settingsController.audioOn.addListener(_audioOnHandler);
     settingsController.musicOn.addListener(_musicOnHandler);
     settingsController.soundsOn.addListener(_soundsOnHandler);
 
-    if (settingsController.audioOn.value && settingsController.musicOn.value) {
-      if (kIsWeb) {
-        _log.info('On the web, music can only start after user interaction.');
-      } else {
-        _playCurrentSongInPlaylist();
-      }
-    }
+    // TODO : Stop listening on dispose
   }
 
   void _audioOnHandler() {
-    _log.fine('audioOn changed to ${_settings!.audioOn.value}');
-    if (_settings!.audioOn.value) {
+    _log.fine('audioOn changed to ${settingsController.audioOn.value}');
+    if (settingsController.audioOn.value) {
       // All sound just got un-muted. Audio is on.
-      if (_settings!.musicOn.value) {
+      if (settingsController.musicOn.value) {
         _startOrResumeMusic();
       }
     } else {
@@ -169,7 +146,8 @@ class AudioController {
       case AppLifecycleState.hidden:
         _stopAllSound();
       case AppLifecycleState.resumed:
-        if (_settings!.audioOn.value && _settings!.musicOn.value) {
+        if (settingsController.audioOn.value &&
+            settingsController.musicOn.value) {
           _startOrResumeMusic();
         }
       case AppLifecycleState.inactive:
@@ -187,9 +165,9 @@ class AudioController {
   }
 
   void _musicOnHandler() {
-    if (_settings!.musicOn.value) {
+    if (settingsController.musicOn.value) {
       // Music got turned on.
-      if (_settings!.audioOn.value) {
+      if (settingsController.audioOn.value) {
         _startOrResumeMusic();
       }
     } else {
@@ -210,9 +188,6 @@ class AudioController {
   /// Preloads all sound effects.
   Future<void> _preloadSfx() async {
     _log.info('Preloading sound effects');
-    // This assumes there is only a limited number of sound effects in the game.
-    // If there are hundreds of long sound effect files, it's better
-    // to be more selective when preloading.
     await AudioCache.instance.loadAll(
       SfxType.values
           .expand(soundTypeToFilename)
@@ -243,9 +218,7 @@ class AudioController {
     try {
       _musicPlayer.resume();
     } catch (e) {
-      // Sometimes, resuming fails with an "Unexpected" error.
       _log.severe('Error resuming music', e);
-      // Try starting the song from scratch.
       _playCurrentSongInPlaylist();
     }
   }

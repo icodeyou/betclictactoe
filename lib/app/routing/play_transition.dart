@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-CustomTransitionPage<T> buildMyTransition<T>({
+CustomTransitionPage<T> buildPlayTransition<T>({
   required Widget child,
   required Color color,
   String? name,
@@ -12,7 +12,7 @@ CustomTransitionPage<T> buildMyTransition<T>({
   return CustomTransitionPage<T>(
     child: child,
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      return _MyReveal(animation: animation, color: color, child: child);
+      return PlayTransition(animation: animation, color: color, child: child);
     },
     key: key,
     name: name,
@@ -22,7 +22,7 @@ CustomTransitionPage<T> buildMyTransition<T>({
   );
 }
 
-class _MyReveal extends StatelessWidget {
+class PlayTransition extends StatelessWidget {
   final Widget child;
 
   final Animation<double> animation;
@@ -32,11 +32,11 @@ class _MyReveal extends StatelessWidget {
   final _slideTween = Tween(begin: const Offset(0, -1), end: Offset.zero);
 
   final _fadeTween = TweenSequence([
-    TweenSequenceItem(tween: ConstantTween(0.0), weight: 1),
+    //TweenSequenceItem(tween: ConstantTween(0.0), weight: 1),
     TweenSequenceItem(tween: Tween(begin: 0.0, end: 1.0), weight: 1),
   ]);
 
-  _MyReveal({
+  PlayTransition({
     required this.child,
     required this.animation,
     required this.color,

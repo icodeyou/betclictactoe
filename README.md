@@ -14,7 +14,7 @@ flutter run
 
 ### Code organization
 
-Code is organized in a loose and shallow feature-first fashion.
+Code is organized in a loose and shallow layer-first fashion.
 In `lib/`, you'll therefore find directories such as `audio`,
 `main_menu` or `settings`. Nothing fancy, but usable.
 

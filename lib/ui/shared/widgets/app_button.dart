@@ -6,18 +6,18 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-class MyButton extends StatefulWidget {
+class AppButton extends StatefulWidget {
   final Widget child;
 
   final VoidCallback? onPressed;
 
-  const MyButton({super.key, required this.child, this.onPressed});
+  const AppButton({super.key, required this.child, this.onPressed});
 
   @override
-  State<MyButton> createState() => _MyButtonState();
+  State<AppButton> createState() => _AppButtonState();
 }
 
-class _MyButtonState extends State<MyButton>
+class _AppButtonState extends State<AppButton>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     duration: const Duration(milliseconds: 300),

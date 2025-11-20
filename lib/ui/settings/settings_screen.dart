@@ -1,13 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:betclictactoe/theme/colors.dart';
+import 'package:betclictactoe/ui/shared/widgets/app_button.dart';
+import 'package:flutter/material.dart' hide Colors;
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 
-import '../player_progress/player_progress.dart';
-import '../style/my_button.dart';
-import '../style/palette.dart';
-import '../style/responsive_screen.dart';
 import 'custom_name_dialog.dart';
-import 'settings.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -16,13 +12,11 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final settings = context.watch<SettingsController>();
-    final palette = context.watch<Palette>();
-
     return Scaffold(
-      backgroundColor: palette.backgroundSettings,
-      body: ResponsiveScreen(
-        squarishMainArea: ListView(
+      backgroundColor: AppColors.backgroundSettings,
+      body: SingleChildScrollView(
+        child: Column(
+          spacing: 60,
           children: [
             _gap,
             const Text(
@@ -36,44 +30,32 @@ class SettingsScreen extends StatelessWidget {
             ),
             _gap,
             const _NameChangeLine('Name'),
-            ValueListenableBuilder<bool>(
-              valueListenable: settings.soundsOn,
-              builder: (context, soundsOn, child) => _SettingsLine(
-                'Sound FX',
-                Icon(soundsOn ? Icons.graphic_eq : Icons.volume_off),
-                onSelected: settings.toggleSoundsOn,
-              ),
-            ),
-            ValueListenableBuilder<bool>(
-              valueListenable: settings.musicOn,
-              builder: (context, musicOn, child) => _SettingsLine(
-                'Music',
-                Icon(musicOn ? Icons.music_note : Icons.music_off),
-                onSelected: settings.toggleMusicOn,
-              ),
+            _SettingsLine(
+              'Sound FX',
+              // TODO: : Get value from notifier
+              Icon(true ? Icons.graphic_eq : Icons.volume_off),
+              onSelected: () {
+                // TODO: Call notifier
+              },
             ),
             _SettingsLine(
-              'Reset progress',
-              const Icon(Icons.delete),
+              'Music',
+              // TODO: : Get value from notifier
+              Icon(true ? Icons.music_note : Icons.music_off),
               onSelected: () {
-                context.read<PlayerProgress>().reset();
-
-                final messenger = ScaffoldMessenger.of(context);
-                messenger.showSnackBar(
-                  const SnackBar(
-                    content: Text('Player progress has been reset.'),
-                  ),
-                );
+                // TODO: Call notifier
               },
             ),
             _gap,
+            const Text('Music by Mr Smith'),
+            _gap,
+            AppButton(
+              onPressed: () {
+                context.pop();
+              },
+              child: const Text('Back'),
+            ),
           ],
-        ),
-        rectangularMenuArea: MyButton(
-          onPressed: () {
-            GoRouter.of(context).pop();
-          },
-          child: const Text('Back'),
         ),
       ),
     );
@@ -87,8 +69,6 @@ class _NameChangeLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final settings = context.watch<SettingsController>();
-
     return InkResponse(
       highlightShape: BoxShape.rectangle,
       onTap: () => showCustomNameDialog(context),
@@ -105,14 +85,11 @@ class _NameChangeLine extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            ValueListenableBuilder(
-              valueListenable: settings.playerName,
-              builder: (context, name, child) => Text(
-                '‘$name’',
-                style: const TextStyle(
-                  fontFamily: 'Permanent Marker',
-                  fontSize: 30,
-                ),
+            Text(
+              'John', // TODO : Get value from notifier
+              style: const TextStyle(
+                fontFamily: 'Permanent Marker',
+                fontSize: 30,
               ),
             ),
           ],
