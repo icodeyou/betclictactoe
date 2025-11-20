@@ -1,3 +1,4 @@
+import 'package:betclictactoe/app/routing/paths.dart';
 import 'package:betclictactoe/theme/colors.dart';
 import 'package:betclictactoe/ui/shared/controllers/audio_controller.dart';
 import 'package:betclictactoe/ui/shared/widgets/app_button.dart';
@@ -6,8 +7,8 @@ import 'package:flutter/material.dart' hide Colors;
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-class MainMenuScreen extends StatelessWidget {
-  const MainMenuScreen({super.key});
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +42,13 @@ class MainMenuScreen extends StatelessWidget {
               AppButton(
                 onPressed: () {
                   audioController.playSfx(SfxType.buttonTap);
-                  GoRouter.of(context).go('/play');
+                  GoRouter.of(context).goNamed(Paths.game.name);
                 },
                 child: const Text('Play'),
               ),
               AppButton(
-                onPressed: () => GoRouter.of(context).push('/settings'),
+                onPressed: () =>
+                    GoRouter.of(context).goNamed(Paths.settings.name),
                 child: const Text('Settings'),
               ),
               Padding(
