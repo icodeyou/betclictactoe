@@ -69,6 +69,9 @@ class MyApp extends StatelessWidget {
                         ),
                       ),
                     ),
+                    appBarTheme: AppBarTheme(
+                      backgroundColor: Colors.transparent,
+                    ),
                   ),
               routerConfig: router,
             );

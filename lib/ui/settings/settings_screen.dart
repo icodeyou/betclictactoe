@@ -10,27 +10,23 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: AppBackButton(),
+        title: Text(
+          'Settings',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontFamily: 'Permanent Marker',
+            fontSize: 45,
+            height: 1,
+          ),
+        ),
+      ),
       backgroundColor: AppColors.backgroundSettings,
       body: SafeArea(
         child: Column(
           spacing: 60,
           children: [
-            Row(
-              children: [
-                AppBackButton(),
-                Expanded(
-                  child: const Text(
-                    'Settings',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'Permanent Marker',
-                      fontSize: 55,
-                      height: 1,
-                    ),
-                  ),
-                ),
-              ],
-            ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(
