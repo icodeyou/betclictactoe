@@ -20,7 +20,7 @@ class PlayView extends StatelessWidget {
           crossAxisSpacing: 8.0,
           children: List.generate(
             AppConstants.gridSize * AppConstants.gridSize,
-            (index) => const CellView(),
+            (i) => CellView(index: i),
           ),
         ),
       ),
