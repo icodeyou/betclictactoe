@@ -99,7 +99,7 @@ class _NameChangeLine extends StatelessWidget {
             ),
             const Spacer(),
             Text(
-              'John', // TODO : Get value from notifier
+              '', // TODO : Get value from shared preferences, and change with dialog
               style: const TextStyle(
                 fontFamily: 'Permanent Marker',
                 fontSize: 30,

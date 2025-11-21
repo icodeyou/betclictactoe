@@ -1,8 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final playNotifierProvider = NotifierProvider<PlayNotifier, PlayState>(
-  () => PlayNotifier(),
-);
+final playNotifierProvider =
+    NotifierProvider.autoDispose<PlayNotifier, PlayState>(() => PlayNotifier());
 
 class PlayState {
   PlayState({required this.xTicks, required this.oTicks});
