@@ -3,6 +3,7 @@ homeScreen:
   settingsButtonLabel: Paramètres
 
 settingsScreen:
+  title: Paramètres
   nameLabel: Nom
   defaultName: Moi
   soundFXLabel: Effets Sonores
@@ -10,4 +11,5 @@ settingsScreen:
   credits: Musique par Mr Smith
 
 playScreen:
+  title: Jeu
   restartButtonLabel: Recommencer

@@ -12,7 +12,7 @@ class PlayView extends StatefulWidget {
 class _PlayViewState extends State<PlayView>
     with SingleTickerProviderStateMixin {
   late final AnimationController _animationController = AnimationController(
-    duration: const Duration(milliseconds: 200),
+    duration: const Duration(milliseconds: 250),
     vsync: this,
   );
 
@@ -21,19 +21,15 @@ class _PlayViewState extends State<PlayView>
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.width,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: GridView.count(
-          crossAxisCount: AppConstants.gridSize,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          mainAxisSpacing: 8.0,
-          crossAxisSpacing: 8.0,
-          children: List.generate(
-            AppConstants.gridSize * AppConstants.gridSize,
-            (i) =>
-                CellView(index: i, animationController: _animationController),
-          ),
+      child: GridView.count(
+        crossAxisCount: AppConstants.gridSize,
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        mainAxisSpacing: 8.0,
+        crossAxisSpacing: 8.0,
+        children: List.generate(
+          AppConstants.gridSize * AppConstants.gridSize,
+          (i) => CellView(index: i, animationController: _animationController),
         ),
       ),
     );

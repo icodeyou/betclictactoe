@@ -18,7 +18,7 @@ class SettingsScreen extends ConsumerWidget {
       appBar: AppBar(
         leading: AppBackButton(),
         title: Text(
-          'Settings',
+          t.settingsScreen.title,
           textAlign: TextAlign.center,
           style: TextStyle(
             fontFamily: 'Permanent Marker',

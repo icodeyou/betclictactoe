@@ -24,7 +24,7 @@ class CellView extends ConsumerWidget {
       onTap: emptyCell && !animationController.isAnimating
           ? () {
               playStateNotifier.tick(index, () async {
-                await animationController.repeat(reverse: true, count: 10);
+                await animationController.repeat(reverse: true, count: 8);
               });
             }
           : null,

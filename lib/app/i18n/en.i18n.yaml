@@ -3,6 +3,7 @@ homeScreen:
   settingsButtonLabel: Settings
 
 settingsScreen:
+  title: Settings
   nameLabel: Name
   defaultName: Me
   soundFXLabel: Sound FX
@@ -10,4 +11,5 @@ settingsScreen:
   credits: Music by Mr Smith
 
 playScreen:
+  title: Play
   restartButtonLabel: Restart
