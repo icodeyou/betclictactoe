@@ -4,15 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CellView extends ConsumerWidget {
-  CellView({super.key, required this.index, required this.animationController});
+  const CellView({
+    super.key,
+    required this.index,
+    required this.animationController,
+  });
 
   final int index;
   final AnimationController animationController;
-
-  late final animationProgress = CurvedAnimation(
-    parent: animationController,
-    curve: Curves.decelerate,
-  );
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -24,7 +23,7 @@ class CellView extends ConsumerWidget {
     return InkWell(
       onTap: emptyCell && !animationController.isAnimating
           ? () {
-              playStateNotifier.tick(index, (winningIndexes) async {
+              playStateNotifier.tick(index, () async {
                 await animationController.repeat(reverse: true, count: 10);
               });
             }
@@ -32,6 +31,12 @@ class CellView extends ConsumerWidget {
       child: AnimatedBuilder(
         animation: animationController,
         builder: (context, child) {
+          final double animationValue;
+          if (playState.getWinningIndexes().contains(index)) {
+            animationValue = animationController.value;
+          } else {
+            animationValue = 0;
+          }
           return Container(
             decoration: emptyCell
                 ? BoxDecoration(
@@ -47,7 +52,7 @@ class CellView extends ConsumerWidget {
                   )
                 : BoxDecoration(
                     color: AppColors.primary.withAlpha(
-                      (200 * animationProgress.value).toInt(),
+                      (200 * animationValue).toInt(),
                     ),
                     shape: BoxShape.circle,
                   ),
@@ -58,7 +63,7 @@ class CellView extends ConsumerWidget {
                 if (xTick || oTick) {
                   return Center(
                     child: Transform.scale(
-                      scale: 1 + 0.2 * animationProgress.value,
+                      scale: 1 + 0.2 * animationValue,
                       child: Transform.translate(
                         offset: Offset(0, 8),
                         child: Text(
@@ -67,9 +72,9 @@ class CellView extends ConsumerWidget {
                             fontSize: 64,
                             fontFamily: 'luckiest_guy',
                             fontWeight: FontWeight.bold,
-                            color: animationController.isAnimating
-                                ? Colors.white
-                                : AppColors.primary,
+                            color: animationValue == 0
+                                ? AppColors.primary
+                                : Colors.white,
                           ),
                         ),
                       ),

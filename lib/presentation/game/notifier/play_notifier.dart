@@ -30,13 +30,15 @@ class PlayState {
       [2, 4, 6],
     ];
 
+    final winningIndexes = <int>[];
+
     for (final position in winningPositions) {
       if (position.every((index) => xTicks.contains(index)) ||
           position.every((index) => oTicks.contains(index))) {
-        return position;
+        winningIndexes.addAll(position);
       }
     }
-    return [];
+    return winningIndexes;
   }
 }
 
@@ -46,7 +48,7 @@ class PlayNotifier extends Notifier<PlayState> {
     return PlayState(xTicks: [], oTicks: []);
   }
 
-  void tick(int index, Future<void> Function(List<int>) winningAnimationCallback) {
+  void tick(int index, Future<void> Function() winningAnimationCallback) {
     // X always starts first.
     final isXTurn = state.xTicks.length == state.oTicks.length;
 
@@ -66,7 +68,7 @@ class PlayNotifier extends Notifier<PlayState> {
       return;
     }
 
-    winningAnimationCallback(winningIndexes).then((_) {
+    winningAnimationCallback().then((_) {
       ref.invalidateSelf();
     });
   }
