@@ -8,3 +8,6 @@ settingsScreen:
   soundFXLabel: Effets Sonores
   musicLabel: Musique
   credits: Musique par Mr Smith
+
+playScreen:
+  restartButtonLabel: Recommencer
