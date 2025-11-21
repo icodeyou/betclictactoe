@@ -4,15 +4,37 @@ import 'dart:math';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:betclictactoe/app_lifecycle/app_lifecycle.dart';
-import 'package:betclictactoe/ui/shared/controllers/settings_controller.dart';
 import 'package:betclictactoe/utils/app_constants.dart';
 import 'package:betclictactoe/utils/audio/songs.dart';
 import 'package:betclictactoe/utils/audio/sounds.dart';
 import 'package:betclictactoe/utils/log.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// Allows playing music and sound. A facade to `package:audioplayers`.
-class AudioController {
+final audioControllerProvider = NotifierProvider<AudioController, AudioState>(
+  () => AudioController(),
+);
+
+class AudioState {
+  AudioState({
+    required this.audioOn,
+    required this.soundsOn,
+    required this.musicOn,
+  });
+
+  /// Whether or not the audio is on at all. This overrides both music
+  /// and sounds (sfx).
+  bool audioOn;
+
+  /// Whether or not the sound effects (sfx) are on.
+  bool soundsOn;
+
+  /// Whether or not the music is on.
+  bool musicOn;
+}
+
+/// This controller manages whether music and sound should be played.
+class AudioController extends Notifier<AudioState> {
   final AudioPlayer _musicPlayer = AudioPlayer(playerId: 'musicPlayer');
 
   /// This is a list of [AudioPlayer] instances which are rotated to play
@@ -28,25 +50,56 @@ class AudioController {
 
   final Random _random = Random();
 
-  SettingsController settingsController = SettingsController();
-
   ValueNotifier<AppLifecycleState>? _lifecycleNotifier;
 
-  /// Creates an instance that plays music and sound.
-  AudioController() {
-    if (settingsController.audioOn.value && settingsController.musicOn.value) {
-      _playCurrentSongInPlaylist();
-    }
+  @override
+  AudioState build() {
+    // By default, we always start playing music.
+    _playCurrentSongInPlaylist();
     _musicPlayer.onPlayerComplete.listen(_handleSongFinished);
     unawaited(_preloadSfx());
+
+    listenSelf((previous, next) {
+      // Handle audioOn changes
+      if (previous?.audioOn != next.audioOn) {
+        logger.d('Audio changed to ${next.audioOn}');
+        if (next.audioOn) {
+          // All sound just got un-muted. Audio is on.
+          if (next.musicOn) {
+            _startOrResumeMusic();
+          }
+        } else {
+          // All sound just got muted. Audio is off.
+          _stopAllSound();
+        }
+      }
+
+      // Handle musicOn changes
+      if (next.musicOn) {
+        logger.d('Music got turned on.');
+        if (next.audioOn) {
+          _startOrResumeMusic();
+        }
+      } else {
+        logger.d('Music got turned off.');
+        _musicPlayer.pause();
+      }
+
+      // Handle soundsOn changes
+      for (final player in _sfxPlayers) {
+        if (player.state == PlayerState.playing) {
+          player.stop();
+        }
+      }
+    });
+
+    return AudioState(audioOn: true, musicOn: true, soundsOn: true);
   }
 
-  // TODO : Use Riverpod instead
   /// Makes sure the audio controller is listening to changes
   /// of both the app lifecycle (e.g. suspended app)
   void attachDependencies(AppLifecycleStateNotifier lifecycleNotifier) {
     _attachLifecycleNotifier(lifecycleNotifier);
-    _attachSettings();
   }
 
   void dispose() {
@@ -64,12 +117,12 @@ class AudioController {
   /// [SettingsController.audioOn] is `true` or if its
   /// [SettingsController.soundsOn] is `false`.
   void playSfx(SfxType type) {
-    final audioOn = settingsController.audioOn.value;
+    final audioOn = state.audioOn;
     if (!audioOn) {
       logger.d(() => 'Ignoring playing sound ($type) because audio is muted.');
       return;
     }
-    final soundsOn = settingsController.soundsOn.value;
+    final soundsOn = state.soundsOn;
     if (!soundsOn) {
       logger.f(
         () => 'Ignoring playing sound ($type) because sounds are turned off.',
@@ -95,35 +148,8 @@ class AudioController {
   /// goes into the background.
   void _attachLifecycleNotifier(AppLifecycleStateNotifier lifecycleNotifier) {
     _lifecycleNotifier?.removeListener(_handleAppLifecycle);
-
     lifecycleNotifier.addListener(_handleAppLifecycle);
     _lifecycleNotifier = lifecycleNotifier;
-  }
-
-  /// Enables the [AudioController] to track changes to settings.
-  /// Namely, when any of [SettingsController.audioOn],
-  /// [SettingsController.musicOn] or [SettingsController.soundsOn] changes,
-  /// the audio controller will act accordingly.
-  void _attachSettings() {
-    // Add handlers to the new settings controller
-    settingsController.audioOn.addListener(_audioOnHandler);
-    settingsController.musicOn.addListener(_musicOnHandler);
-    settingsController.soundsOn.addListener(_soundsOnHandler);
-
-    // TODO : Stop listening on dispose
-  }
-
-  void _audioOnHandler() {
-    logger.d('audioOn changed to ${settingsController.audioOn.value}');
-    if (settingsController.audioOn.value) {
-      // All sound just got un-muted. Audio is on.
-      if (settingsController.musicOn.value) {
-        _startOrResumeMusic();
-      }
-    } else {
-      // All sound just got muted. Audio is off.
-      _stopAllSound();
-    }
   }
 
   void _handleAppLifecycle() {
@@ -133,8 +159,7 @@ class AudioController {
       case AppLifecycleState.hidden:
         _stopAllSound();
       case AppLifecycleState.resumed:
-        if (settingsController.audioOn.value &&
-            settingsController.musicOn.value) {
+        if (state.audioOn && state.musicOn) {
           _startOrResumeMusic();
         }
       case AppLifecycleState.inactive:
@@ -149,18 +174,6 @@ class AudioController {
     _playlist.addLast(_playlist.removeFirst());
     // Play the song at the beginning of the playlist.
     _playCurrentSongInPlaylist();
-  }
-
-  void _musicOnHandler() {
-    if (settingsController.musicOn.value) {
-      // Music got turned on.
-      if (settingsController.audioOn.value) {
-        _startOrResumeMusic();
-      }
-    } else {
-      // Music got turned off.
-      _musicPlayer.pause();
-    }
   }
 
   Future<void> _playCurrentSongInPlaylist() async {
@@ -181,14 +194,6 @@ class AudioController {
           .map((path) => 'sfx/$path')
           .toList(),
     );
-  }
-
-  void _soundsOnHandler() {
-    for (final player in _sfxPlayers) {
-      if (player.state == PlayerState.playing) {
-        player.stop();
-      }
-    }
   }
 
   void _startOrResumeMusic() async {
