@@ -1,7 +1,7 @@
 import 'package:betclictactoe/app/routing/paths.dart';
 import 'package:betclictactoe/theme/colors.dart';
 import 'package:betclictactoe/ui/game/game_screen.dart';
-import 'package:betclictactoe/ui/menu/main_menu_screen.dart';
+import 'package:betclictactoe/ui/home/home_screen.dart';
 import 'package:betclictactoe/ui/settings/settings_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -16,6 +16,7 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Paths.home.path,
+      name: Paths.home.name,
       builder: (context, state) => const HomeScreen(),
       routes: [
         GoRoute(
