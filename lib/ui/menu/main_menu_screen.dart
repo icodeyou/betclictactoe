@@ -3,7 +3,7 @@ import 'package:betclictactoe/theme/colors.dart';
 import 'package:betclictactoe/ui/shared/controllers/audio_controller.dart';
 import 'package:betclictactoe/ui/shared/widgets/app_button.dart';
 import 'package:betclictactoe/utils/audio/sounds.dart';
-import 'package:flutter/material.dart' hide Colors;
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -15,11 +15,11 @@ class HomeScreen extends StatelessWidget {
     final audioController = context.watch<AudioController>();
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundMain,
+      backgroundColor: AppColors.backgroundHome,
       body: SafeArea(
         child: Center(
           child: Column(
-            spacing: 10,
+            spacing: 24,
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -31,6 +31,7 @@ class HomeScreen extends StatelessWidget {
                       'Betclic \nTic Tac Toe',
                       textAlign: TextAlign.center,
                       style: TextStyle(
+                        color: Colors.white,
                         fontFamily: 'Permanent Marker',
                         fontSize: 55,
                         height: 1,
@@ -40,6 +41,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               AppButton(
+                overDarkBackground: true,
                 onPressed: () {
                   audioController.playSfx(SfxType.buttonTap);
                   GoRouter.of(context).goNamed(Paths.game.name);
@@ -54,6 +56,7 @@ class HomeScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 32),
                 child: IconButton(
+                  color: Colors.white,
                   onPressed: () {
                     // TODO: Call notifier
                   },

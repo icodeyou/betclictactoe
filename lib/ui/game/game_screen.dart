@@ -8,7 +8,7 @@ class GameScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.playBackground,
+      backgroundColor: AppColors.background,
       appBar: AppBar(leading: AppBackButton()),
       body: Center(child: Text('Game Screen')),
     );

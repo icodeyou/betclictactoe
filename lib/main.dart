@@ -52,23 +52,14 @@ class MyApp extends StatelessWidget {
               theme:
                   ThemeData.from(
                     colorScheme: ColorScheme.fromSeed(
-                      seedColor: AppColors.darkPen,
-                      surface: AppColors.backgroundMain,
+                      seedColor: AppColors.primary,
+                      surface: AppColors.background,
                     ),
                     textTheme: TextTheme(
                       bodyMedium: TextStyle(color: AppColors.ink),
                     ),
                     useMaterial3: true,
                   ).copyWith(
-                    // Make buttons more fun.
-                    filledButtonTheme: FilledButtonThemeData(
-                      style: FilledButton.styleFrom(
-                        textStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
-                    ),
                     appBarTheme: AppBarTheme(
                       backgroundColor: Colors.transparent,
                     ),

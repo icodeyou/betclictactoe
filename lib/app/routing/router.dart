@@ -22,7 +22,7 @@ final router = GoRouter(
           path: Paths.game.path,
           name: Paths.game.name,
           pageBuilder: (context, state) => buildPlayTransition<void>(
-            color: AppColors.playBackground,
+            color: AppColors.background,
             child: const GameScreen(),
           ),
         ),

@@ -1,59 +1,31 @@
-// Copyright 2023, the Flutter project authors. Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
-import 'dart:math';
-
+import 'package:betclictactoe/theme/colors.dart';
 import 'package:flutter/material.dart';
 
-class AppButton extends StatefulWidget {
+class AppButton extends StatelessWidget {
   final Widget child;
 
   final VoidCallback? onPressed;
+  final bool overDarkBackground;
 
-  const AppButton({super.key, required this.child, this.onPressed});
-
-  @override
-  State<AppButton> createState() => _AppButtonState();
-}
-
-class _AppButtonState extends State<AppButton>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _controller = AnimationController(
-    duration: const Duration(milliseconds: 300),
-    vsync: this,
-  );
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  const AppButton({
+    super.key,
+    required this.child,
+    this.onPressed,
+    this.overDarkBackground = false,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (event) {
-        _controller.repeat();
-      },
-      onExit: (event) {
-        _controller.stop(canceled: false);
-      },
-      child: RotationTransition(
-        turns: _controller.drive(const _MySineTween(0.005)),
-        child: FilledButton(onPressed: widget.onPressed, child: widget.child),
+    return FilledButton(
+      onPressed: onPressed,
+      style: FilledButton.styleFrom(
+        textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        foregroundColor: overDarkBackground ? AppColors.primary : null,
+        backgroundColor: overDarkBackground ? Colors.white : null,
       ),
+      child: child,
     );
-  }
-}
-
-class _MySineTween extends Animatable<double> {
-  final double maxExtent;
-
-  const _MySineTween(this.maxExtent);
-
-  @override
-  double transform(double t) {
-    return sin(t * 2 * pi) * maxExtent;
   }
 }
