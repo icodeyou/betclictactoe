@@ -38,7 +38,7 @@ class Confetti extends StatefulWidget {
 class ConfettiPainter extends CustomPainter {
   final defaultPaint = Paint();
 
-  final int snippingsCount = 200;
+  final int snippingCount = 200;
 
   late final List<_PaperSnipping> _snippings;
 
@@ -59,7 +59,7 @@ class ConfettiPainter extends CustomPainter {
     if (_size == null) {
       // First time we have a size.
       _snippings = List.generate(
-        snippingsCount,
+        snippingCount,
         (i) =>
             _PaperSnipping(frontColor: colors[i % colors.length], bounds: size),
       );

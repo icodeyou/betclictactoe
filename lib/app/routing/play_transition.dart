@@ -37,6 +37,7 @@ class PlayTransition extends StatelessWidget {
   ]);
 
   PlayTransition({
+    super.key,
     required this.child,
     required this.animation,
     required this.color,

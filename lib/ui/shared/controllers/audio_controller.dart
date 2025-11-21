@@ -7,13 +7,11 @@ import 'package:betclictactoe/app_lifecycle/app_lifecycle.dart';
 import 'package:betclictactoe/ui/shared/controllers/settings_controller.dart';
 import 'package:betclictactoe/utils/audio/songs.dart';
 import 'package:betclictactoe/utils/audio/sounds.dart';
+import 'package:betclictactoe/utils/log.dart';
 import 'package:flutter/widgets.dart';
-import 'package:logging/logging.dart';
 
 /// Allows playing music and sound. A facade to `package:audioplayers`.
 class AudioController {
-  static final _log = Logger('AudioController');
-
   final AudioPlayer _musicPlayer;
 
   /// This is a list of [AudioPlayer] instances which are rotated to play
@@ -79,21 +77,21 @@ class AudioController {
   void playSfx(SfxType type) {
     final audioOn = settingsController.audioOn.value;
     if (!audioOn) {
-      _log.fine(() => 'Ignoring playing sound ($type) because audio is muted.');
+      logger.d(() => 'Ignoring playing sound ($type) because audio is muted.');
       return;
     }
     final soundsOn = settingsController.soundsOn.value;
     if (!soundsOn) {
-      _log.fine(
+      logger.f(
         () => 'Ignoring playing sound ($type) because sounds are turned off.',
       );
       return;
     }
 
-    _log.fine(() => 'Playing sound: $type');
+    logger.d(() => 'Playing sound: $type');
     final options = soundTypeToFilename(type);
     final filename = options[_random.nextInt(options.length)];
-    _log.fine(() => '- Chosen filename: $filename');
+    logger.d(() => '- Chosen filename: $filename');
 
     final currentPlayer = _sfxPlayers[_currentSfxPlayer];
     currentPlayer.play(
@@ -127,7 +125,7 @@ class AudioController {
   }
 
   void _audioOnHandler() {
-    _log.fine('audioOn changed to ${settingsController.audioOn.value}');
+    logger.d('audioOn changed to ${settingsController.audioOn.value}');
     if (settingsController.audioOn.value) {
       // All sound just got un-muted. Audio is on.
       if (settingsController.musicOn.value) {
@@ -157,7 +155,7 @@ class AudioController {
   }
 
   void _handleSongFinished(void _) {
-    _log.info('Last song finished playing.');
+    logger.i('Last song finished playing.');
     // Move the song that just finished playing to the end of the playlist.
     _playlist.addLast(_playlist.removeFirst());
     // Play the song at the beginning of the playlist.
@@ -177,17 +175,17 @@ class AudioController {
   }
 
   Future<void> _playCurrentSongInPlaylist() async {
-    _log.info(() => 'Playing ${_playlist.first} now.');
+    logger.i(() => 'Playing ${_playlist.first} now.');
     try {
       await _musicPlayer.play(AssetSource('music/${_playlist.first.filename}'));
     } catch (e) {
-      _log.severe('Could not play song ${_playlist.first}', e);
+      logger.e('Could not play song ${_playlist.first} - Error: $e');
     }
   }
 
   /// Preloads all sound effects.
   Future<void> _preloadSfx() async {
-    _log.info('Preloading sound effects');
+    logger.i('Preloading sound effects');
     await AudioCache.instance.loadAll(
       SfxType.values
           .expand(soundTypeToFilename)
@@ -206,7 +204,7 @@ class AudioController {
 
   void _startOrResumeMusic() async {
     if (_musicPlayer.source == null) {
-      _log.info(
+      logger.i(
         'No music source set. '
         'Start playing the current song in playlist.',
       );
@@ -214,17 +212,17 @@ class AudioController {
       return;
     }
 
-    _log.info('Resuming paused music.');
+    logger.i('Resuming paused music.');
     try {
       _musicPlayer.resume();
     } catch (e) {
-      _log.severe('Error resuming music', e);
+      logger.e('Error resuming music - Error: $e');
       _playCurrentSongInPlaylist();
     }
   }
 
   void _stopAllSound() {
-    _log.info('Stopping all sound');
+    logger.i('Stopping all sound');
     _musicPlayer.pause();
     for (final player in _sfxPlayers) {
       player.stop();

@@ -1,5 +1,5 @@
+import 'package:betclictactoe/utils/log.dart';
 import 'package:flutter/widgets.dart';
-import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 typedef AppLifecycleStateNotifier = ValueNotifier<AppLifecycleState>;
@@ -14,7 +14,6 @@ class AppLifecycleObserver extends StatefulWidget {
 }
 
 class _AppLifecycleObserverState extends State<AppLifecycleObserver> {
-  static final _log = Logger('AppLifecycleObserver');
   late final AppLifecycleListener _appLifecycleListener;
 
   final ValueNotifier<AppLifecycleState> lifecycleListenable = ValueNotifier(
@@ -41,6 +40,6 @@ class _AppLifecycleObserverState extends State<AppLifecycleObserver> {
     _appLifecycleListener = AppLifecycleListener(
       onStateChange: (s) => lifecycleListenable.value = s,
     );
-    _log.info('Subscribed to app lifecycle updates');
+    logger.i('Subscribed to app lifecycle updates');
   }
 }
