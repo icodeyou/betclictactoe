@@ -13,4 +13,8 @@ class AppConstants {
   /// count into the [polyphony] limit.
   /// This value should be at least `1`.
   static const int polyphony = 2;
+
+  /// Game
+  static const int gridSize = 3;
+  static const int winningLength = 3;
 }
