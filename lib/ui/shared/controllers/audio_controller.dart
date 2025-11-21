@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:betclictactoe/app_lifecycle/app_lifecycle.dart';
 import 'package:betclictactoe/ui/shared/controllers/settings_controller.dart';
+import 'package:betclictactoe/utils/app_constants.dart';
 import 'package:betclictactoe/utils/audio/songs.dart';
 import 'package:betclictactoe/utils/audio/sounds.dart';
 import 'package:betclictactoe/utils/log.dart';
@@ -12,15 +13,18 @@ import 'package:flutter/widgets.dart';
 
 /// Allows playing music and sound. A facade to `package:audioplayers`.
 class AudioController {
-  final AudioPlayer _musicPlayer;
+  final AudioPlayer _musicPlayer = AudioPlayer(playerId: 'musicPlayer');
 
   /// This is a list of [AudioPlayer] instances which are rotated to play
   /// sound effects.
-  final List<AudioPlayer> _sfxPlayers;
+  final List<AudioPlayer> _sfxPlayers = Iterable.generate(
+    AppConstants.polyphony,
+    (i) => AudioPlayer(playerId: 'sfxPlayer#$i'),
+  ).toList(growable: false);
 
   int _currentSfxPlayer = 0;
 
-  final Queue<Song> _playlist;
+  final Queue<Song> _playlist = Queue.of(List<Song>.of(songs)..shuffle());
 
   final Random _random = Random();
 
@@ -29,22 +33,7 @@ class AudioController {
   ValueNotifier<AppLifecycleState>? _lifecycleNotifier;
 
   /// Creates an instance that plays music and sound.
-  ///
-  /// Use [polyphony] to configure the number of sound effects (SFX) that can
-  /// play at the same time. A [polyphony] of `1` will always only play one
-  /// sound (a new sound will stop the previous one). See discussion
-  /// of [_sfxPlayers] to learn why this is the case.
-  ///
-  /// Background music does not count into the [polyphony] limit. Music will
-  /// never be overridden by sound effects because that would be silly.
-  AudioController({int polyphony = 2})
-    : assert(polyphony >= 1),
-      _musicPlayer = AudioPlayer(playerId: 'musicPlayer'),
-      _sfxPlayers = Iterable.generate(
-        polyphony,
-        (i) => AudioPlayer(playerId: 'sfxPlayer#$i'),
-      ).toList(growable: false),
-      _playlist = Queue.of(List<Song>.of(songs)..shuffle()) {
+  AudioController() {
     if (settingsController.audioOn.value && settingsController.musicOn.value) {
       _playCurrentSongInPlaylist();
     }
