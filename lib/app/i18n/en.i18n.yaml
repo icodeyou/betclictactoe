@@ -1,9 +1,10 @@
 homeScreen:
-  playButtonLabel: Play
+  playButtonLabel: Play with a friend
   settingsButtonLabel: Settings
 
 settingsScreen:
   nameLabel: Name
+  defaultName: Me
   soundFXLabel: Sound FX
   musicLabel: Music
   credits: Music by Mr Smith

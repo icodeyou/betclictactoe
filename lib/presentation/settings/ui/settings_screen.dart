@@ -1,8 +1,8 @@
 import 'package:betclictactoe/app/i18n/translations.g.dart';
 import 'package:betclictactoe/presentation/settings/ui/custom_name_dialog.dart';
 import 'package:betclictactoe/presentation/shared/controller/audio_controller.dart';
-import 'package:betclictactoe/presentation/shared/widgets/app_back_button.dart';
 import 'package:betclictactoe/presentation/shared/theme/colors.dart';
+import 'package:betclictactoe/presentation/shared/widgets/app_back_button.dart';
 import 'package:flutter/material.dart' hide Colors;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -99,7 +99,9 @@ class _NameChangeLine extends StatelessWidget {
             ),
             const Spacer(),
             Text(
-              '', // TODO : Get value from shared preferences, and change with dialog
+              t
+                  .settingsScreen
+                  .defaultName, // TODO : Get value from shared preferences, and change with dialog
               style: const TextStyle(
                 fontFamily: 'Permanent Marker',
                 fontSize: 30,

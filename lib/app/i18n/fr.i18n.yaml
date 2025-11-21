@@ -1,9 +1,10 @@
 homeScreen:
-  playButtonLabel: Jouer
+  playButtonLabel: Jouer avec un ami
   settingsButtonLabel: Paramètres
 
 settingsScreen:
   nameLabel: Nom
+  defaultName: Moi
   soundFXLabel: Effets Sonores
   musicLabel: Musique
   credits: Musique par Mr Smith
