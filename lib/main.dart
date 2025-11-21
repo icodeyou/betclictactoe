@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'app/routing/router.dart';
 import 'app_lifecycle/app_lifecycle.dart';
 import 'theme/colors.dart';
-import 'ui/shared/controllers/audio_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,47 +25,22 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppLifecycleObserver(
-      child: MultiProvider(
-        // This is where you add objects that you want to have available
-        // throughout your game.
-        //
-        // Every widget in the game can access these objects by calling
-        // `context.watch()` or `context.read()`.
-        // See `lib/main_menu/main_menu_screen.dart` for example usage.
-        providers: [
-          // Set up audio.
-          ProxyProvider<AppLifecycleStateNotifier, AudioController>(
-            create: (context) => AudioController(),
-            update: (context, lifecycleNotifier, audio) {
-              audio!.attachDependencies(lifecycleNotifier);
-              return audio;
-            },
-            dispose: (context, audio) => audio.dispose(),
-            // Ensures that music starts immediately.
-            lazy: false,
-          ),
-        ],
-        child: Builder(
-          builder: (context) {
-            return MaterialApp.router(
-              theme:
-                  ThemeData.from(
-                    colorScheme: ColorScheme.fromSeed(
-                      seedColor: AppColors.primary,
-                      surface: AppColors.background,
-                    ),
-                    textTheme: TextTheme(
-                      bodyMedium: TextStyle(color: AppColors.ink),
-                    ),
-                    useMaterial3: true,
-                  ).copyWith(
-                    appBarTheme: AppBarTheme(
-                      backgroundColor: Colors.transparent,
-                    ),
-                  ),
-              routerConfig: router,
-            );
-          },
+      child: ProviderScope(
+        child: MaterialApp.router(
+          theme:
+              ThemeData.from(
+                colorScheme: ColorScheme.fromSeed(
+                  seedColor: AppColors.primary,
+                  surface: AppColors.background,
+                ),
+                textTheme: TextTheme(
+                  bodyMedium: TextStyle(color: AppColors.ink),
+                ),
+                useMaterial3: true,
+              ).copyWith(
+                appBarTheme: AppBarTheme(backgroundColor: Colors.transparent),
+              ),
+          routerConfig: router,
         ),
       ),
     );
