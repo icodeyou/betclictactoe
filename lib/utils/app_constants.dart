@@ -1,4 +1,7 @@
 class AppConstants {
+  /// General
+  static const String fullAppName = 'Betclic \nTic Tac Toe';
+  
   /// Logging
   static const int logStacktraceNumber = 2;
 

@@ -1,3 +1,4 @@
+import 'package:betclictactoe/app/i18n/translations.g.dart';
 import 'package:betclictactoe/theme/colors.dart';
 import 'package:betclictactoe/ui/shared/controllers/audio_controller.dart';
 import 'package:betclictactoe/ui/shared/widgets/app_back_button.dart';
@@ -40,9 +41,9 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 child: ListView(
                   children: [
-                    const _NameChangeLine('Name'),
+                    _NameChangeLine(t.settingsScreen.nameLabel),
                     _SettingsLine(
-                      'Sound FX',
+                      t.settingsScreen.soundFXLabel,
                       Icon(
                         audioControllerState.sfxOn
                             ? Icons.graphic_eq
@@ -53,7 +54,7 @@ class SettingsScreen extends ConsumerWidget {
                       },
                     ),
                     _SettingsLine(
-                      'Music',
+                      t.settingsScreen.musicLabel,
                       Icon(
                         audioControllerState.musicOn
                             ? Icons.music_note
@@ -67,7 +68,7 @@ class SettingsScreen extends ConsumerWidget {
                 ),
               ),
             ),
-            const Text('Music by Mr Smith'),
+            Text(t.settingsScreen.credits),
           ],
         ),
       ),

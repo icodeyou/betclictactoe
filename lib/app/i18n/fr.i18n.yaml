@@ -1,0 +1,9 @@
+homeScreen:
+  playButtonLabel: Jouer
+  settingsButtonLabel: Paramètres
+
+settingsScreen:
+  nameLabel: Nom
+  soundFXLabel: Effets Sonores
+  musicLabel: Musique
+  credits: Musique par Mr Smith

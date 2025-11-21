@@ -1,0 +1,9 @@
+homeScreen:
+  playButtonLabel: Play
+  settingsButtonLabel: Settings
+
+settingsScreen:
+  nameLabel: Name
+  soundFXLabel: Sound FX
+  musicLabel: Music
+  credits: Music by Mr Smith

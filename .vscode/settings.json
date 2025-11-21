@@ -17,5 +17,14 @@
         "Tictactoe",
         "wehee",
         "wssh"
-    ]
+    ],
+    "cSpell.overrides": [
+      {
+        "filename": "**/*.i18n.yaml"
+      },
+      {
+        "language": "fr,en",
+        "filename": "**/*fr.i18n.yaml"
+      }
+    ],
 }

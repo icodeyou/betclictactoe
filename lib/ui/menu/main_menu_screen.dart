@@ -1,7 +1,9 @@
+import 'package:betclictactoe/app/i18n/translations.g.dart';
 import 'package:betclictactoe/app/routing/paths.dart';
 import 'package:betclictactoe/theme/colors.dart';
 import 'package:betclictactoe/ui/shared/controllers/audio_controller.dart';
 import 'package:betclictactoe/ui/shared/widgets/app_button.dart';
+import 'package:betclictactoe/utils/app_constants.dart';
 import 'package:betclictactoe/utils/audio/sounds.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -29,7 +31,7 @@ class HomeScreen extends ConsumerWidget {
                   child: Transform.rotate(
                     angle: -0.1,
                     child: const Text(
-                      'Betclic \nTic Tac Toe',
+                      AppConstants.fullAppName,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
@@ -47,12 +49,12 @@ class HomeScreen extends ConsumerWidget {
                   audioControllerNotifier.playSfx(SfxType.buttonTap);
                   GoRouter.of(context).goNamed(Paths.game.name);
                 },
-                child: const Text('Play'),
+                child: Text(t.homeScreen.playButtonLabel),
               ),
               AppButton(
                 onPressed: () =>
                     GoRouter.of(context).goNamed(Paths.settings.name),
-                child: const Text('Settings'),
+                child: Text(t.homeScreen.settingsButtonLabel),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 32),

@@ -20,6 +20,8 @@ dependencies:
   shared_preferences: ^2.2.3
   riverpod: ^3.0.3
   flutter_riverpod: ^3.0.3
+  slang: ^4.10.1
+  slang_flutter: ^4.10.0
 
 dev_dependencies:
   flutter_lints: ^6.0.0
