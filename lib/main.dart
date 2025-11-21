@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'app/routing/router.dart';
-import 'app_lifecycle/app_lifecycle.dart';
-import 'theme/colors.dart';
+import 'app/app_lifecycle.dart';
+import 'presentation/shared/theme/colors.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

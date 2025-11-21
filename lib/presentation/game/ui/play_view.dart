@@ -1,4 +1,4 @@
-import 'package:betclictactoe/ui/game/cell_view.dart';
+import 'package:betclictactoe/presentation/game/ui/cell_view.dart';
 import 'package:betclictactoe/utils/app_constants.dart';
 import 'package:flutter/material.dart';
 

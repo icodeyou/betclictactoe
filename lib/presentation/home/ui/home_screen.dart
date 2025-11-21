@@ -1,8 +1,8 @@
 import 'package:betclictactoe/app/i18n/translations.g.dart';
 import 'package:betclictactoe/app/routing/paths.dart';
-import 'package:betclictactoe/theme/colors.dart';
-import 'package:betclictactoe/ui/shared/controllers/audio_controller.dart';
-import 'package:betclictactoe/ui/shared/widgets/app_button.dart';
+import 'package:betclictactoe/presentation/shared/theme/colors.dart';
+import 'package:betclictactoe/presentation/shared/controller/audio_controller.dart';
+import 'package:betclictactoe/presentation/shared/widgets/app_button.dart';
 import 'package:betclictactoe/utils/app_constants.dart';
 import 'package:betclictactoe/utils/audio/sounds.dart';
 import 'package:flutter/material.dart';

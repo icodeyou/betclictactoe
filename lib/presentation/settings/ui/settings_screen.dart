@@ -1,11 +1,10 @@
 import 'package:betclictactoe/app/i18n/translations.g.dart';
-import 'package:betclictactoe/theme/colors.dart';
-import 'package:betclictactoe/ui/shared/controllers/audio_controller.dart';
-import 'package:betclictactoe/ui/shared/widgets/app_back_button.dart';
+import 'package:betclictactoe/presentation/settings/ui/custom_name_dialog.dart';
+import 'package:betclictactoe/presentation/shared/controller/audio_controller.dart';
+import 'package:betclictactoe/presentation/shared/widgets/app_back_button.dart';
+import 'package:betclictactoe/presentation/shared/theme/colors.dart';
 import 'package:flutter/material.dart' hide Colors;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'custom_name_dialog.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});

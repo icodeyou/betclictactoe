@@ -1,4 +1,4 @@
-import 'package:betclictactoe/ui/shared/controllers/audio_controller.dart';
+import 'package:betclictactoe/presentation/shared/controller/audio_controller.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

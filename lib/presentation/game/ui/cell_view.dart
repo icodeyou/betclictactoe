@@ -1,4 +1,4 @@
-import 'package:betclictactoe/theme/colors.dart';
+import 'package:betclictactoe/presentation/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class CellView extends StatelessWidget {

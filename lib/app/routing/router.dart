@@ -1,8 +1,8 @@
 import 'package:betclictactoe/app/routing/paths.dart';
-import 'package:betclictactoe/theme/colors.dart';
-import 'package:betclictactoe/ui/game/game_screen.dart';
-import 'package:betclictactoe/ui/home/home_screen.dart';
-import 'package:betclictactoe/ui/settings/settings_screen.dart';
+import 'package:betclictactoe/presentation/shared/theme/colors.dart';
+import 'package:betclictactoe/presentation/game/ui/game_screen.dart';
+import 'package:betclictactoe/presentation/home/ui/home_screen.dart';
+import 'package:betclictactoe/presentation/settings/ui/settings_screen.dart';
 import 'package:go_router/go_router.dart';
 
 import 'play_transition.dart';
