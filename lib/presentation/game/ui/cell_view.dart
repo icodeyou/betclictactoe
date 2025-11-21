@@ -1,49 +1,36 @@
-import 'dart:math';
-
 import 'package:betclictactoe/presentation/game/notifier/play_notifier.dart';
 import 'package:betclictactoe/presentation/shared/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CellView extends ConsumerStatefulWidget {
-  const CellView({super.key, required this.index});
+class CellView extends ConsumerWidget {
+  CellView({super.key, required this.index, required this.animationController});
 
   final int index;
+  final AnimationController animationController;
 
-  @override
-  ConsumerState<CellView> createState() => _CellViewState();
-}
-
-class _CellViewState extends ConsumerState<CellView>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _animationController = AnimationController(
-    duration: const Duration(milliseconds: 200),
-    vsync: this,
-  );
   late final animationProgress = CurvedAnimation(
-    parent: _animationController,
+    parent: animationController,
     curve: Curves.decelerate,
   );
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final playState = ref.watch(playNotifierProvider);
     final playStateNotifier = ref.watch(playNotifierProvider.notifier);
     final emptyCell =
-        !playState.xTicks.contains(widget.index) &&
-        !playState.oTicks.contains(widget.index);
+        !playState.xTicks.contains(index) && !playState.oTicks.contains(index);
 
     return InkWell(
-      onTap: emptyCell
+      onTap: emptyCell && !animationController.isAnimating
           ? () {
-              playStateNotifier.tick(widget.index);
-              if (Random().nextInt(5) == 3) {
-                _finalAnimation();
-              }
+              playStateNotifier.tick(index, (winningIndexes) async {
+                await animationController.repeat(reverse: true, count: 10);
+              });
             }
           : null,
       child: AnimatedBuilder(
-        animation: _animationController,
+        animation: animationController,
         builder: (context, child) {
           return Container(
             decoration: emptyCell
@@ -66,19 +53,25 @@ class _CellViewState extends ConsumerState<CellView>
                   ),
             child: Builder(
               builder: (context) {
-                final xTick = playState.xTicks.contains(widget.index);
-                final oTick = playState.oTicks.contains(widget.index);
+                final xTick = playState.xTicks.contains(index);
+                final oTick = playState.oTicks.contains(index);
                 if (xTick || oTick) {
                   return Center(
-                    child: Text(
-                      xTick ? 'X' : 'O',
-                      style: TextStyle(
-                        fontSize: 64,
-                        fontFamily: 'luckiest_guy',
-                        fontWeight: FontWeight.bold,
-                        color: _animationController.isAnimating
-                            ? Colors.white
-                            : AppColors.primary,
+                    child: Transform.scale(
+                      scale: 1 + 0.2 * animationProgress.value,
+                      child: Transform.translate(
+                        offset: Offset(0, 8),
+                        child: Text(
+                          xTick ? 'X' : 'O',
+                          style: TextStyle(
+                            fontSize: 64,
+                            fontFamily: 'luckiest_guy',
+                            fontWeight: FontWeight.bold,
+                            color: animationController.isAnimating
+                                ? Colors.white
+                                : AppColors.primary,
+                          ),
+                        ),
                       ),
                     ),
                   );
@@ -91,16 +84,5 @@ class _CellViewState extends ConsumerState<CellView>
         },
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
-  Future<void> _finalAnimation() async {
-    await _animationController.repeat(reverse: true, count: 10);
-    ref.invalidate(playNotifierProvider);
   }
 }

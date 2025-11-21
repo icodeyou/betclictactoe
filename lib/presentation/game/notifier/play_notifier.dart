@@ -1,5 +1,6 @@
 import 'package:betclictactoe/presentation/shared/controller/audio_controller.dart';
 import 'package:betclictactoe/utils/audio/sounds.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final playNotifierProvider =
@@ -12,6 +13,31 @@ class PlayState {
   /// of the game, in chronological order, for x and o players.
   final List<int> xTicks;
   final List<int> oTicks;
+
+  List<int> getWinningIndexes() {
+    // Winning positions
+    const winningPositions = [
+      // Horizontal
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      // Vertical
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      // Diagonal
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+
+    for (final position in winningPositions) {
+      if (position.every((index) => xTicks.contains(index)) ||
+          position.every((index) => oTicks.contains(index))) {
+        return position;
+      }
+    }
+    return [];
+  }
 }
 
 class PlayNotifier extends Notifier<PlayState> {
@@ -20,7 +46,7 @@ class PlayNotifier extends Notifier<PlayState> {
     return PlayState(xTicks: [], oTicks: []);
   }
 
-  void tick(int index) {
+  void tick(int index, Future<void> Function(List<int>) winningAnimationCallback) {
     // X always starts first.
     final isXTurn = state.xTicks.length == state.oTicks.length;
 
@@ -34,5 +60,19 @@ class PlayNotifier extends Notifier<PlayState> {
     } else {
       state = PlayState(xTicks: state.xTicks, oTicks: [...state.oTicks, index]);
     }
+
+    final winningIndexes = state.getWinningIndexes();
+    if (winningIndexes.isEmpty) {
+      return;
+    }
+
+    winningAnimationCallback(winningIndexes).then((_) {
+      ref.invalidateSelf();
+    });
+  }
+
+  Future<void> launchAnimation(AnimationController animationController) async {
+    await animationController.forward();
+    await animationController.reverse();
   }
 }
