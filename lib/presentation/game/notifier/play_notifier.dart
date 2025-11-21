@@ -1,3 +1,5 @@
+import 'package:betclictactoe/presentation/shared/controller/audio_controller.dart';
+import 'package:betclictactoe/utils/audio/sounds.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final playNotifierProvider =
@@ -21,6 +23,11 @@ class PlayNotifier extends Notifier<PlayState> {
   void tick(int index) {
     // X always starts first.
     final isXTurn = state.xTicks.length == state.oTicks.length;
+
+    // Play sound
+    ref
+        .read(audioControllerProvider.notifier)
+        .playSfx(isXTurn ? SfxType.huhsh : SfxType.wssh);
 
     if (isXTurn) {
       state = PlayState(xTicks: [...state.xTicks, index], oTicks: state.oTicks);
