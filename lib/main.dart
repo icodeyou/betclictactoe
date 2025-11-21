@@ -24,8 +24,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppLifecycleObserver(
-      child: ProviderScope(
+    return ProviderScope(
+      child: AppLifecycleObserver(
         child: MaterialApp.router(
           theme:
               ThemeData.from(

@@ -1,45 +1,51 @@
-import 'package:betclictactoe/utils/log.dart';
+import 'package:betclictactoe/ui/shared/controllers/audio_controller.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-typedef AppLifecycleStateNotifier = ValueNotifier<AppLifecycleState>;
-
-class AppLifecycleObserver extends StatefulWidget {
+class AppLifecycleObserver extends ConsumerStatefulWidget {
   final Widget child;
 
   const AppLifecycleObserver({required this.child, super.key});
 
   @override
-  State<AppLifecycleObserver> createState() => _AppLifecycleObserverState();
+  ConsumerState<AppLifecycleObserver> createState() =>
+      _AppLifecycleObserverState();
 }
 
-class _AppLifecycleObserverState extends State<AppLifecycleObserver> {
-  late final AppLifecycleListener _appLifecycleListener;
+class _AppLifecycleObserverState extends ConsumerState<AppLifecycleObserver>
+    with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
 
-  final ValueNotifier<AppLifecycleState> lifecycleListenable = ValueNotifier(
-    AppLifecycleState.inactive,
-  );
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    final audioControllerNotifier = ref.read(audioControllerProvider.notifier);
+
+    switch (state) {
+      case AppLifecycleState.paused:
+      case AppLifecycleState.detached:
+      case AppLifecycleState.hidden:
+        audioControllerNotifier.handleAppPaused();
+      case AppLifecycleState.resumed:
+        audioControllerNotifier.handleAppResumed();
+      case AppLifecycleState.inactive:
+        break;
+    }
+
+    super.didChangeAppLifecycleState(state);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return InheritedProvider<AppLifecycleStateNotifier>.value(
-      value: lifecycleListenable,
-      child: widget.child,
-    );
+    return widget.child;
   }
 
   @override
   void dispose() {
-    _appLifecycleListener.dispose();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _appLifecycleListener = AppLifecycleListener(
-      onStateChange: (s) => lifecycleListenable.value = s,
-    );
-    logger.i('Subscribed to app lifecycle updates');
   }
 }

@@ -3,12 +3,10 @@ import 'dart:collection';
 import 'dart:math';
 
 import 'package:audioplayers/audioplayers.dart';
-import 'package:betclictactoe/app_lifecycle/app_lifecycle.dart';
 import 'package:betclictactoe/utils/app_constants.dart';
 import 'package:betclictactoe/utils/audio/songs.dart';
 import 'package:betclictactoe/utils/audio/sounds.dart';
 import 'package:betclictactoe/utils/log.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final audioControllerProvider = NotifierProvider<AudioController, AudioState>(
@@ -49,8 +47,6 @@ class AudioController extends Notifier<AudioState> {
   final Queue<Song> _playlist = Queue.of(List<Song>.of(songs)..shuffle());
 
   final Random _random = Random();
-
-  ValueNotifier<AppLifecycleState>? _lifecycleNotifier;
 
   @override
   AudioState build() {
@@ -93,22 +89,15 @@ class AudioController extends Notifier<AudioState> {
       }
     });
 
+    ref.onDispose(() {
+      _stopAllSound();
+      _musicPlayer.dispose();
+      for (final player in _sfxPlayers) {
+        player.dispose();
+      }
+    });
+
     return AudioState(audioOn: true, musicOn: true, soundsOn: true);
-  }
-
-  /// Makes sure the audio controller is listening to changes
-  /// of both the app lifecycle (e.g. suspended app)
-  void attachDependencies(AppLifecycleStateNotifier lifecycleNotifier) {
-    _attachLifecycleNotifier(lifecycleNotifier);
-  }
-
-  void dispose() {
-    _lifecycleNotifier?.removeListener(_handleAppLifecycle);
-    _stopAllSound();
-    _musicPlayer.dispose();
-    for (final player in _sfxPlayers) {
-      player.dispose();
-    }
   }
 
   /// Plays a single sound effect, defined by [type].
@@ -143,28 +132,13 @@ class AudioController extends Notifier<AudioState> {
     _currentSfxPlayer = (_currentSfxPlayer + 1) % _sfxPlayers.length;
   }
 
-  /// Enables the [AudioController] to listen to [AppLifecycleState] events,
-  /// and therefore do things like stopping playback when the game
-  /// goes into the background.
-  void _attachLifecycleNotifier(AppLifecycleStateNotifier lifecycleNotifier) {
-    _lifecycleNotifier?.removeListener(_handleAppLifecycle);
-    lifecycleNotifier.addListener(_handleAppLifecycle);
-    _lifecycleNotifier = lifecycleNotifier;
+  void handleAppPaused() {
+    _stopAllSound();
   }
 
-  void _handleAppLifecycle() {
-    switch (_lifecycleNotifier!.value) {
-      case AppLifecycleState.paused:
-      case AppLifecycleState.detached:
-      case AppLifecycleState.hidden:
-        _stopAllSound();
-      case AppLifecycleState.resumed:
-        if (state.audioOn && state.musicOn) {
-          _startOrResumeMusic();
-        }
-      case AppLifecycleState.inactive:
-        // No need to react to this state change.
-        break;
+  void handleAppResumed() {
+    if (state.audioOn && state.musicOn) {
+      _startOrResumeMusic();
     }
   }
 
