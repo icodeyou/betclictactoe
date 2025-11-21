@@ -13,6 +13,7 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final audioControllerNotifier = ref.watch(audioControllerProvider.notifier);
+    final audioControllerState = ref.watch(audioControllerProvider);
 
     return Scaffold(
       backgroundColor: AppColors.backgroundHome,
@@ -58,10 +59,13 @@ class HomeScreen extends ConsumerWidget {
                 child: IconButton(
                   color: Colors.white,
                   onPressed: () {
-                    // TODO: Call notifier
+                    audioControllerNotifier.toggleAudio();
                   },
-                  // TODO: Get value from notifier
-                  icon: Icon(true ? Icons.volume_up : Icons.volume_off),
+                  icon: Icon(
+                    audioControllerState.audioOn
+                        ? Icons.volume_up
+                        : Icons.volume_off,
+                  ),
                 ),
               ),
             ],

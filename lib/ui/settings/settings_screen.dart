@@ -1,14 +1,19 @@
 import 'package:betclictactoe/theme/colors.dart';
+import 'package:betclictactoe/ui/shared/controllers/audio_controller.dart';
 import 'package:betclictactoe/ui/shared/widgets/app_back_button.dart';
 import 'package:flutter/material.dart' hide Colors;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'custom_name_dialog.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final audioControllerNotifier = ref.watch(audioControllerProvider.notifier);
+    final audioControllerState = ref.watch(audioControllerProvider);
+
     return Scaffold(
       appBar: AppBar(
         leading: AppBackButton(),
@@ -38,18 +43,24 @@ class SettingsScreen extends StatelessWidget {
                     const _NameChangeLine('Name'),
                     _SettingsLine(
                       'Sound FX',
-                      // TODO: : Get value from notifier
-                      Icon(true ? Icons.graphic_eq : Icons.volume_off),
+                      Icon(
+                        audioControllerState.sfxOn
+                            ? Icons.graphic_eq
+                            : Icons.volume_off,
+                      ),
                       onSelected: () {
-                        // TODO: Call notifier
+                        audioControllerNotifier.toggleSound();
                       },
                     ),
                     _SettingsLine(
                       'Music',
-                      // TODO: : Get value from notifier
-                      Icon(true ? Icons.music_note : Icons.music_off),
+                      Icon(
+                        audioControllerState.musicOn
+                            ? Icons.music_note
+                            : Icons.music_off,
+                      ),
                       onSelected: () {
-                        // TODO: Call notifier
+                        audioControllerNotifier.toggleMusic();
                       },
                     ),
                   ],

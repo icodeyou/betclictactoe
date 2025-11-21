@@ -16,7 +16,7 @@ final audioControllerProvider = NotifierProvider<AudioController, AudioState>(
 class AudioState {
   AudioState({
     required this.audioOn,
-    required this.soundsOn,
+    required this.sfxOn,
     required this.musicOn,
   });
 
@@ -25,7 +25,7 @@ class AudioState {
   bool audioOn;
 
   /// Whether or not the sound effects (sfx) are on.
-  bool soundsOn;
+  bool sfxOn;
 
   /// Whether or not the music is on.
   bool musicOn;
@@ -97,7 +97,7 @@ class AudioController extends Notifier<AudioState> {
       }
     });
 
-    return AudioState(audioOn: true, musicOn: true, soundsOn: true);
+    return AudioState(audioOn: true, musicOn: true, sfxOn: true);
   }
 
   /// Plays a single sound effect, defined by [type].
@@ -111,7 +111,7 @@ class AudioController extends Notifier<AudioState> {
       logger.d(() => 'Ignoring playing sound ($type) because audio is muted.');
       return;
     }
-    final soundsOn = state.soundsOn;
+    final soundsOn = state.sfxOn;
     if (!soundsOn) {
       logger.f(
         () => 'Ignoring playing sound ($type) because sounds are turned off.',
@@ -140,6 +140,30 @@ class AudioController extends Notifier<AudioState> {
     if (state.audioOn && state.musicOn) {
       _startOrResumeMusic();
     }
+  }
+
+  void toggleAudio() {
+    state = AudioState(
+      audioOn: !state.audioOn,
+      musicOn: state.musicOn,
+      sfxOn: state.sfxOn,
+    );
+  }
+
+  void toggleSound() {
+    state = AudioState(
+      audioOn: state.audioOn,
+      musicOn: state.musicOn,
+      sfxOn: !state.sfxOn,
+    );
+  }
+
+  void toggleMusic() {
+    state = AudioState(
+      audioOn: state.audioOn,
+      musicOn: !state.musicOn,
+      sfxOn: state.sfxOn,
+    );
   }
 
   void _handleSongFinished(void _) {
