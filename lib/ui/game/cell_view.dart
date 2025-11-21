@@ -1,3 +1,4 @@
+import 'package:betclictactoe/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class CellView extends StatelessWidget {
@@ -5,9 +6,23 @@ class CellView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-      child: Center(child: Text('X')),
+    return InkWell(
+      onTap: () {
+        print('Cell tapped');
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.0),
+          gradient: RadialGradient(
+            // small offset from center
+            center: const Alignment(0.3, 0.3),
+            colors: [
+              AppColors.primary.withAlpha(20),
+              AppColors.primary.withAlpha(60),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
