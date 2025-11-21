@@ -1,5 +1,5 @@
 import 'package:betclictactoe/presentation/game/notifier/play_notifier.dart';
-import 'package:betclictactoe/presentation/shared/theme/colors.dart';
+import 'package:betclictactoe/presentation/shared/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

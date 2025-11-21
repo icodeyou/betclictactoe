@@ -1,6 +1,6 @@
 import 'package:betclictactoe/app/i18n/translations.g.dart';
 import 'package:betclictactoe/app/routing/paths.dart';
-import 'package:betclictactoe/presentation/shared/theme/colors.dart';
+import 'package:betclictactoe/presentation/shared/theme/app_colors.dart';
 import 'package:betclictactoe/presentation/shared/controller/audio_controller.dart';
 import 'package:betclictactoe/presentation/shared/widgets/app_button.dart';
 import 'package:betclictactoe/utils/app_constants.dart';

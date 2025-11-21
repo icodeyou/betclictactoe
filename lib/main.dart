@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'app/routing/router.dart';
 import 'app/app_lifecycle.dart';
-import 'presentation/shared/theme/colors.dart';
+import 'presentation/shared/theme/app_colors.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

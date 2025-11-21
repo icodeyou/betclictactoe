@@ -1,4 +1,4 @@
-import 'package:betclictactoe/presentation/shared/theme/colors.dart';
+import 'package:betclictactoe/presentation/shared/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class AppButton extends StatelessWidget {
