@@ -27,8 +27,8 @@ class GameScreen extends ConsumerWidget {
           fontSize: 45,
         ),
       ),
-      body: SafeArea(
-        child: Container(
+      body: SingleChildScrollView(
+        child: Padding(
           padding: ThemeSizes.m.asInsets,
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -36,7 +36,7 @@ class GameScreen extends ConsumerWidget {
             children: [
               ScoreView(),
               SizedBox(height: ThemeSizes.m),
-              Expanded(child: Center(child: PlayView())),
+              PlayView(),
               AppButton(
                 onPressed: () {
                   ref.invalidate(playNotifierProvider);
