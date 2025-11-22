@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
     return ProviderScope(
       child: AppLifecycleObserver(
         child: MaterialApp.router(
+          debugShowCheckedModeBanner: false,
           theme:
               ThemeData.from(
                 colorScheme: ColorScheme.fromSeed(
