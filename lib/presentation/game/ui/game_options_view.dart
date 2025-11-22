@@ -1,3 +1,4 @@
+import 'package:betclictactoe/app/i18n/translations.g.dart';
 import 'package:betclictactoe/presentation/game/notifier/game_notifier.dart';
 import 'package:betclictactoe/presentation/shared/theme/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +16,7 @@ class GameOptionsView extends ConsumerWidget {
       spacing: 8,
       children: [
         Text(
-          "I am playing first with X",
-
+          t.gameScreen.playFirstLabel,
           style: TextStyle(
             color: AppColors.darkText,
             fontSize: 20,

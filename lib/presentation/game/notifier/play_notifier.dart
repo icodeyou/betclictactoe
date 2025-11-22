@@ -41,6 +41,10 @@ class PlayState {
     }
     return winningIndexes;
   }
+
+  bool isXTurn() {
+    return xTicks.length == oTicks.length;
+  }
 }
 
 class PlayNotifier extends Notifier<PlayState> {
@@ -52,8 +56,7 @@ class PlayNotifier extends Notifier<PlayState> {
   }
 
   void tick(int index, Future<void> Function() winningAnimationCallback) {
-    // X always starts first.
-    final isXTurn = state.xTicks.length == state.oTicks.length;
+    final isXTurn = state.isXTurn();
 
     // Play sound
     ref
