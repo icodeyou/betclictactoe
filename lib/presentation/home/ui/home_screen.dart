@@ -52,8 +52,10 @@ class HomeScreen extends ConsumerWidget {
                 text: t.homeScreen.playButtonLabel,
               ),
               AppButton(
-                onPressed: () =>
-                    GoRouter.of(context).goNamed(Paths.settings.name),
+                onPressed: () {
+                  audioControllerNotifier.playSfx(SfxType.buttonTap);
+                  GoRouter.of(context).goNamed(Paths.settings.name);
+                },
                 text: t.homeScreen.settingsButtonLabel,
               ),
               Padding(

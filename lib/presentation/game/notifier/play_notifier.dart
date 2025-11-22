@@ -49,6 +49,8 @@ class PlayState {
 
 class PlayNotifier extends Notifier<PlayState> {
   GameNotifier get _gameNotifier => ref.read(gameNotifierProvider.notifier);
+  AudioController get _audioController =>
+      ref.read(audioControllerProvider.notifier);
 
   @override
   PlayState build() {
@@ -59,9 +61,6 @@ class PlayNotifier extends Notifier<PlayState> {
     final isXTurn = state.isXTurn();
 
     // Play sound
-    ref
-        .read(audioControllerProvider.notifier)
-        .playSfx(isXTurn ? SfxType.huhsh : SfxType.wssh);
 
     if (isXTurn) {
       state = PlayState(xTicks: [...state.xTicks, index], oTicks: state.oTicks);
@@ -71,8 +70,13 @@ class PlayNotifier extends Notifier<PlayState> {
 
     final winningIndexes = state.getWinningIndexes();
     if (winningIndexes.isEmpty) {
+      ref
+          .read(audioControllerProvider.notifier)
+          .playSfx(isXTurn ? SfxType.huhsh : SfxType.wssh);
       return;
     }
+
+    _audioController.playSfx(SfxType.congrats);
 
     _gameNotifier.incrementScore(isXTurn: isXTurn);
 
