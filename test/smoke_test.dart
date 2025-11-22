@@ -1,4 +1,4 @@
-import 'package:betclictactoe/main.dart';
+import 'package:betclictactoe/app/app.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
