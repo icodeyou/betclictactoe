@@ -1,3 +1,4 @@
+import 'package:betclictactoe/presentation/shared/theme/theme_sizes.dart';
 import 'package:flutter/material.dart';
 
 class IconLine extends StatelessWidget {
@@ -20,7 +21,7 @@ class IconLine extends StatelessWidget {
       highlightShape: BoxShape.rectangle,
       onTap: onSelected,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
+        padding: ThemeSizes.l.asInsets.horizontalOnly,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
