@@ -3,6 +3,9 @@ import 'package:betclictactoe/app/i18n/translations.g.dart';
 import 'package:betclictactoe/app/routing/router.dart';
 import 'package:betclictactoe/app/startup/global_provider.dart';
 import 'package:betclictactoe/presentation/shared/theme/theme_colors.dart';
+import 'package:betclictactoe/presentation/shared/theme/theme_font_sizes.dart';
+import 'package:betclictactoe/presentation/shared/widgets/app_button.dart';
+import 'package:betclictactoe/presentation/shared/widgets/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -22,7 +25,7 @@ class MyApp extends ConsumerWidget {
               mainAxisSize: MainAxisSize.min,
               spacing: 16,
               children: [
-                Text(t.splashScreen.title),
+                AppText(t.splashScreen.title, fontSize: ThemeFontSizes.l),
                 CircularProgressIndicator(),
               ],
             ),
@@ -40,12 +43,12 @@ class MyApp extends ConsumerWidget {
               mainAxisSize: MainAxisSize.min,
               spacing: 16,
               children: [
-                Text(t.splashScreen.errorMessage),
-                ElevatedButton(
+                AppText(t.splashScreen.errorMessage, fontSize: ThemeFontSizes.l),
+                AppButton(
                   onPressed: () {
                     ref.invalidate(globalProvider);
                   },
-                  child: Text(t.splashScreen.retryButtonLabel),
+                  text: t.splashScreen.retryButtonLabel,
                 ),
               ],
             ),

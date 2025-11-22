@@ -1,26 +1,38 @@
+import 'package:betclictactoe/presentation/shared/theme/theme_colors.dart';
 import 'package:flutter/material.dart';
 
 class AppText extends StatelessWidget {
-  final String text;
-  final TextStyle? style;
-  final TextAlign textAlign;
-  final int maxLines;
-  final TextOverflow overflow;
-
   const AppText(
     this.text, {
     super.key,
-    this.style,
+    required this.fontSize,
+    this.fontFamily,
+    this.fontWeight,
+    this.color,
     this.textAlign = TextAlign.center,
     this.maxLines = 2,
     this.overflow = TextOverflow.ellipsis,
   });
 
+  final String text;
+  final double fontSize;
+  final String? fontFamily;
+  final FontWeight? fontWeight;
+  final Color? color;
+  final TextAlign textAlign;
+  final int maxLines;
+  final TextOverflow overflow;
+
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: style,
+      style: TextStyle(
+        color: color ?? ThemeColors.darkText,
+        fontSize: fontSize,
+        fontFamily: fontFamily,
+        fontWeight: fontWeight,
+      ),
       textAlign: textAlign,
       maxLines: maxLines,
       overflow: overflow,

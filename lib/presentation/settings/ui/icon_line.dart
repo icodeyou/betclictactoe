@@ -1,4 +1,6 @@
-import 'package:betclictactoe/presentation/shared/theme/theme_sizes.dart';
+import 'package:betclictactoe/presentation/shared/theme/theme_font_sizes.dart';
+import 'package:betclictactoe/presentation/shared/widgets/app_text.dart';
+import 'package:betclictactoe/utils/app_constants.dart';
 import 'package:flutter/material.dart';
 
 class IconLine extends StatelessWidget {
@@ -20,25 +22,20 @@ class IconLine extends StatelessWidget {
     return InkResponse(
       highlightShape: BoxShape.rectangle,
       onTap: onSelected,
-      child: Padding(
-        padding: ThemeSizes.l.asInsets.horizontalOnly,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Text(
-                title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontFamily: 'Permanent Marker',
-                  fontSize: 30,
-                ),
-              ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Expanded(
+            child: AppText(
+              title,
+              maxLines: 1,
+              fontFamily: AppConstants.titleFont,
+              fontSize: ThemeFontSizes.xl,
+              textAlign: TextAlign.start,
             ),
-            icon,
-          ],
-        ),
+          ),
+          icon,
+        ],
       ),
     );
   }

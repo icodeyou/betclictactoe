@@ -5,6 +5,8 @@ import 'package:betclictactoe/presentation/game/ui/score_view.dart';
 import 'package:betclictactoe/presentation/shared/theme/theme_colors.dart';
 import 'package:betclictactoe/presentation/shared/widgets/app_back_button.dart';
 import 'package:betclictactoe/presentation/shared/widgets/app_button.dart';
+import 'package:betclictactoe/presentation/shared/widgets/app_text.dart';
+import 'package:betclictactoe/utils/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,14 +19,11 @@ class GameScreen extends ConsumerWidget {
       backgroundColor: ThemeColors.background,
       appBar: AppBar(
         leading: AppBackButton(),
-        title: Text(
+        title: AppText(
           t.gameScreen.title,
           textAlign: TextAlign.center,
-          style: TextStyle(
-            fontFamily: 'Permanent Marker',
-            fontSize: 45,
-            height: 1,
-          ),
+          fontFamily: AppConstants.titleFont,
+          fontSize: 45,
         ),
       ),
       body: SafeArea(
@@ -41,14 +40,8 @@ class GameScreen extends ConsumerWidget {
                 onPressed: () {
                   ref.invalidate(playNotifierProvider);
                 },
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  spacing: 12,
-                  children: [
-                    Icon(Icons.replay, size: 24),
-                    Text(t.gameScreen.restartButtonLabel),
-                  ],
-                ),
+                text: t.gameScreen.restartButtonLabel,
+                icon: Icons.replay,
               ),
             ],
           ),

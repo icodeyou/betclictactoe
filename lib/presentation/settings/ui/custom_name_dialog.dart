@@ -1,4 +1,9 @@
+import 'package:betclictactoe/app/i18n/translations.g.dart';
 import 'package:betclictactoe/presentation/settings/notifier/settings_notifier.dart';
+import 'package:betclictactoe/presentation/shared/theme/theme_colors.dart';
+import 'package:betclictactoe/presentation/shared/theme/theme_font_sizes.dart';
+import 'package:betclictactoe/presentation/shared/theme/theme_sizes.dart';
+import 'package:betclictactoe/presentation/shared/widgets/app_text.dart';
 import 'package:betclictactoe/utils/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -37,25 +42,37 @@ class _CustomNameDialogState extends ConsumerState<CustomNameDialog> {
         curve: Curves.easeOutCubic,
       ),
       child: SimpleDialog(
-        title: const Text('Change name'),
+        title: const AppText(
+          'Change name',
+          fontSize: ThemeFontSizes.m,
+          textAlign: TextAlign.start,
+        ),
         children: [
-          TextField(
-            controller: _controller,
-            autofocus: true,
-            maxLength: AppConstants.playerNameMaxLength,
-            maxLengthEnforcement: MaxLengthEnforcement.enforced,
-            textAlign: TextAlign.center,
-            textCapitalization: TextCapitalization.words,
-            textInputAction: TextInputAction.done,
-            onSubmitted: (value) {
-              _onSubmit(context, value);
-            },
+          Padding(
+            padding: ThemeSizes.l.asInsets.horizontalOnly,
+            child: TextField(
+              controller: _controller,
+              autofocus: true,
+              maxLength: AppConstants.playerNameMaxLength,
+              maxLengthEnforcement: MaxLengthEnforcement.enforced,
+              textCapitalization: TextCapitalization.words,
+              textInputAction: TextInputAction.done,
+              style: const TextStyle(fontSize: ThemeFontSizes.l),
+              onSubmitted: (value) {
+                _onSubmit(context, value);
+              },
+            ),
           ),
           TextButton(
             onPressed: () {
               _onSubmit(context, _controller.text);
             },
-            child: const Text('Close'),
+            child: AppText(
+              t.settingsScreen.saveButtonLabel,
+              fontSize: ThemeFontSizes.m,
+              color: ThemeColors.primary,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ],
       ),

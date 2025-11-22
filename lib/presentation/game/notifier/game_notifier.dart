@@ -9,13 +9,13 @@ class GameState {
     required this.playerName,
     required this.isPlayingFirstWithX,
     required this.friendScore,
-    required this.userScore,
+    required this.playerScore,
   });
 
   final String playerName;
   final bool isPlayingFirstWithX;
   final int friendScore;
-  final int userScore;
+  final int playerScore;
 }
 
 class GameNotifier extends Notifier<GameState> {
@@ -28,7 +28,7 @@ class GameNotifier extends Notifier<GameState> {
       playerName: playerName,
       isPlayingFirstWithX: true,
       friendScore: 0,
-      userScore: 0,
+      playerScore: 0,
     );
   }
 
@@ -37,7 +37,7 @@ class GameNotifier extends Notifier<GameState> {
       playerName: state.playerName,
       isPlayingFirstWithX: !state.isPlayingFirstWithX,
       friendScore: state.friendScore,
-      userScore: state.userScore,
+      playerScore: state.playerScore,
     );
   }
 
@@ -48,14 +48,14 @@ class GameNotifier extends Notifier<GameState> {
         playerName: state.playerName,
         isPlayingFirstWithX: state.isPlayingFirstWithX,
         friendScore: state.friendScore,
-        userScore: state.userScore + 1,
+        playerScore: state.playerScore + 1,
       );
     } else {
       state = GameState(
         playerName: state.playerName,
         isPlayingFirstWithX: state.isPlayingFirstWithX,
         friendScore: state.friendScore + 1,
-        userScore: state.userScore,
+        playerScore: state.playerScore,
       );
     }
   }

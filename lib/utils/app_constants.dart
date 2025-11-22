@@ -5,8 +5,10 @@ class AppConstants {
   /// Logging
   static const int logStacktraceNumber = 2;
 
-  /// Textfields
+  /// UI
   static const int playerNameMaxLength = 15;
+  static const String tictactoeFont = 'luckiest_guy';
+  static const String titleFont = 'permanent_marker';
 
   /// Audio
   ///

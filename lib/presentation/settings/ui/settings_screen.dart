@@ -4,8 +4,12 @@ import 'package:betclictactoe/presentation/settings/ui/icon_line.dart';
 import 'package:betclictactoe/presentation/settings/ui/string_line.dart';
 import 'package:betclictactoe/presentation/shared/controller/audio_controller.dart';
 import 'package:betclictactoe/presentation/shared/theme/theme_colors.dart';
+import 'package:betclictactoe/presentation/shared/theme/theme_font_sizes.dart';
+import 'package:betclictactoe/presentation/shared/theme/theme_sizes.dart';
 import 'package:betclictactoe/presentation/shared/widgets/app_back_button.dart';
-import 'package:flutter/material.dart' hide Colors;
+import 'package:betclictactoe/presentation/shared/widgets/app_text.dart';
+import 'package:betclictactoe/utils/app_constants.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -21,14 +25,12 @@ class SettingsScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         leading: AppBackButton(),
-        title: Text(
+        title: AppText(
           t.settingsScreen.title,
           textAlign: TextAlign.center,
-          style: TextStyle(
-            fontFamily: 'Permanent Marker',
-            fontSize: 45,
-            height: 1,
-          ),
+          fontFamily: AppConstants.titleFont,
+          fontSize: ThemeFontSizes.xxxl,
+          color: Colors.black,
         ),
       ),
       backgroundColor: ThemeColors.backgroundSettings,
@@ -38,10 +40,7 @@ class SettingsScreen extends ConsumerWidget {
           children: [
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 24,
-                ),
+                padding: ThemeSizes.xl.asInsets,
                 child: ListView(
                   children: [
                     StringLine(
@@ -70,7 +69,7 @@ class SettingsScreen extends ConsumerWidget {
                 ),
               ),
             ),
-            Text(t.settingsScreen.credits),
+            AppText(t.settingsScreen.credits, fontSize: ThemeFontSizes.s),
           ],
         ),
       ),

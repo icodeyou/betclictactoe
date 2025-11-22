@@ -1,6 +1,8 @@
 import 'package:betclictactoe/app/i18n/translations.g.dart';
 import 'package:betclictactoe/presentation/game/notifier/game_notifier.dart';
 import 'package:betclictactoe/presentation/shared/theme/theme_colors.dart';
+import 'package:betclictactoe/presentation/shared/theme/theme_font_sizes.dart';
+import 'package:betclictactoe/presentation/shared/widgets/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -16,17 +18,15 @@ class GameOptionsView extends ConsumerWidget {
       spacing: 8,
       children: [
         Expanded(
-          child: Text(
-            ' ${gameState.playerName} ${t.gameScreen.playFirstLabel}',
+          child: AppText(
+            '${gameState.playerName} ${t.gameScreen.playFirstLabel}',
             maxLines: 2,
             textAlign: TextAlign.right,
-            style: TextStyle(
-              color: gameState.isPlayingFirstWithX
-                  ? Theme.of(context).colorScheme.primary
-                  : ThemeColors.darkText,
-              fontSize: 18,
-              fontWeight: FontWeight.w300,
-            ),
+            color: gameState.isPlayingFirstWithX
+                ? Theme.of(context).colorScheme.primary
+                : ThemeColors.darkText,
+            fontSize: ThemeFontSizes.m,
+            fontWeight: FontWeight.w300,
           ),
         ),
         Switch(

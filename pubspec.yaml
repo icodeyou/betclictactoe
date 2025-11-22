@@ -39,7 +39,7 @@ flutter:
     - assets/sfx/
 
   fonts:
-    - family: Permanent Marker
+    - family: permanent_marker
       fonts:
         - asset: assets/fonts/Permanent_Marker/PermanentMarker-Regular.ttf
     - family: luckiest_guy

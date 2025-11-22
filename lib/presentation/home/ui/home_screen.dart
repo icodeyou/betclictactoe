@@ -3,6 +3,7 @@ import 'package:betclictactoe/app/routing/paths.dart';
 import 'package:betclictactoe/presentation/shared/controller/audio_controller.dart';
 import 'package:betclictactoe/presentation/shared/theme/theme_colors.dart';
 import 'package:betclictactoe/presentation/shared/widgets/app_button.dart';
+import 'package:betclictactoe/presentation/shared/widgets/app_text.dart';
 import 'package:betclictactoe/utils/app_constants.dart';
 import 'package:betclictactoe/utils/audio/sounds.dart';
 import 'package:flutter/material.dart';
@@ -30,15 +31,12 @@ class HomeScreen extends ConsumerWidget {
                 child: Center(
                   child: Transform.rotate(
                     angle: -0.1,
-                    child: const Text(
+                    child: const AppText(
                       AppConstants.fullAppName,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'Permanent Marker',
-                        fontSize: 55,
-                        height: 1,
-                      ),
+                      color: Colors.white,
+                      fontFamily: AppConstants.titleFont,
+                      fontSize: 55,
                     ),
                   ),
                 ),
@@ -50,12 +48,12 @@ class HomeScreen extends ConsumerWidget {
                   audioControllerNotifier.playSfx(SfxType.buttonTap);
                   GoRouter.of(context).goNamed(Paths.game.name);
                 },
-                child: Text(t.homeScreen.playButtonLabel),
+                text: t.homeScreen.playButtonLabel,
               ),
               AppButton(
                 onPressed: () =>
                     GoRouter.of(context).goNamed(Paths.settings.name),
-                child: Text(t.homeScreen.settingsButtonLabel),
+                text: t.homeScreen.settingsButtonLabel,
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 32),

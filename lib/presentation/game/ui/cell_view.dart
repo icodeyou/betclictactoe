@@ -1,5 +1,7 @@
 import 'package:betclictactoe/presentation/game/notifier/play_notifier.dart';
 import 'package:betclictactoe/presentation/shared/theme/theme_colors.dart';
+import 'package:betclictactoe/presentation/shared/widgets/app_text.dart';
+import 'package:betclictactoe/utils/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -66,16 +68,14 @@ class CellView extends ConsumerWidget {
                       scale: 1 + 0.2 * animationValue,
                       child: Transform.translate(
                         offset: Offset(0, 8),
-                        child: Text(
+                        child: AppText(
                           xTick ? 'X' : 'O',
-                          style: TextStyle(
-                            fontSize: 64,
-                            fontFamily: 'luckiest_guy',
-                            fontWeight: FontWeight.bold,
-                            color: animationValue == 0
-                                ? ThemeColors.secondary
-                                : Colors.white,
-                          ),
+                          fontSize: 64,
+                          fontFamily: AppConstants.tictactoeFont,
+                          fontWeight: FontWeight.bold,
+                          color: animationValue == 0
+                              ? ThemeColors.secondary
+                              : Colors.white,
                         ),
                       ),
                     ),
