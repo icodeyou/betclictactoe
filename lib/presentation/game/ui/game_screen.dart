@@ -27,29 +27,31 @@ class GameScreen extends ConsumerWidget {
           ),
         ),
       ),
-      body: Container(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          spacing: 16,
-          children: [
-            ScoreView(),
-            SizedBox(height: 16),
-            PlayView(),
-            AppButton(
-              onPressed: () {
-                ref.invalidate(playNotifierProvider);
-              },
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                spacing: 12,
-                children: [
-                  Icon(Icons.replay, size: 24),
-                  Text(t.playScreen.restartButtonLabel),
-                ],
+      body: SafeArea(
+        child: Container(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            spacing: 16,
+            children: [
+              ScoreView(),
+              SizedBox(height: 16),
+              Expanded(child: Center(child: PlayView())),
+              AppButton(
+                onPressed: () {
+                  ref.invalidate(playNotifierProvider);
+                },
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  spacing: 12,
+                  children: [
+                    Icon(Icons.replay, size: 24),
+                    Text(t.playScreen.restartButtonLabel),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

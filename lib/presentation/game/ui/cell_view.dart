@@ -45,13 +45,13 @@ class CellView extends ConsumerWidget {
                       // small offset from center
                       center: const Alignment(0.3, 0.3),
                       colors: [
-                        AppColors.primary.withAlpha(20),
-                        AppColors.primary.withAlpha(60),
+                        AppColors.secondary.withAlpha(20),
+                        AppColors.secondary.withAlpha(60),
                       ],
                     ),
                   )
                 : BoxDecoration(
-                    color: AppColors.primary.withAlpha(
+                    color: AppColors.secondary.withAlpha(
                       (200 * animationValue).toInt(),
                     ),
                     shape: BoxShape.circle,
@@ -73,7 +73,7 @@ class CellView extends ConsumerWidget {
                             fontFamily: 'luckiest_guy',
                             fontWeight: FontWeight.bold,
                             color: animationValue == 0
-                                ? AppColors.primary
+                                ? AppColors.secondary
                                 : Colors.white,
                           ),
                         ),

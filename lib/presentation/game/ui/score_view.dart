@@ -10,11 +10,9 @@ class ScoreView extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.background,
-        border: Border.all(color: AppColors.primary, width: 0.5),
-
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withAlpha(50),
+            color: AppColors.secondary.withAlpha(50),
             spreadRadius: 2,
             blurRadius: 5,
             offset: const Offset(0, 3), // changes position of shadow

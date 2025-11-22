@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'app/routing/router.dart';
 import 'app/app_lifecycle.dart';
+import 'app/routing/router.dart';
 import 'presentation/shared/theme/app_colors.dart';
 
 void main() async {
@@ -31,10 +31,8 @@ class MyApp extends StatelessWidget {
               ThemeData.from(
                 colorScheme: ColorScheme.fromSeed(
                   seedColor: AppColors.primary,
+                  secondary: AppColors.secondary,
                   surface: AppColors.background,
-                ),
-                textTheme: TextTheme(
-                  bodyMedium: TextStyle(color: AppColors.ink),
                 ),
                 useMaterial3: true,
               ).copyWith(

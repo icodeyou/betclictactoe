@@ -1,3 +1,4 @@
+import 'package:betclictactoe/presentation/shared/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class GameOptionsView extends StatelessWidget {
@@ -14,9 +15,14 @@ class GameOptionsView extends StatelessWidget {
             print(newValue);
           },
         ),
-        const Text(
+        Text(
           "I am playing first",
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+
+          style: TextStyle(
+            color: AppColors.darkText,
+            fontSize: 20,
+            fontWeight: FontWeight.w400,
+          ),
         ),
       ],
     );
