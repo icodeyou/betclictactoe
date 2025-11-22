@@ -1,3 +1,4 @@
+import 'package:betclictactoe/presentation/game/notifier/game_notifier.dart';
 import 'package:betclictactoe/presentation/shared/controller/audio_controller.dart';
 import 'package:betclictactoe/utils/audio/sounds.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +44,8 @@ class PlayState {
 }
 
 class PlayNotifier extends Notifier<PlayState> {
+  GameNotifier get _gameNotifier => ref.read(gameNotifierProvider.notifier);
+
   @override
   PlayState build() {
     return PlayState(xTicks: [], oTicks: []);
@@ -67,6 +70,8 @@ class PlayNotifier extends Notifier<PlayState> {
     if (winningIndexes.isEmpty) {
       return;
     }
+
+    _gameNotifier.incrementScore(isXTurn: isXTurn);
 
     winningAnimationCallback().then((_) {
       ref.invalidateSelf();

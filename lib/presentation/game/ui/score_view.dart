@@ -1,13 +1,16 @@
 import 'package:betclictactoe/app/i18n/translations.g.dart';
+import 'package:betclictactoe/presentation/game/notifier/game_notifier.dart';
 import 'package:betclictactoe/presentation/game/ui/game_options_view.dart';
 import 'package:betclictactoe/presentation/shared/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ScoreView extends StatelessWidget {
+class ScoreView extends ConsumerWidget {
   const ScoreView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final gameState = ref.watch(gameNotifierProvider);
     return Container(
       decoration: BoxDecoration(
         color: AppColors.background,
@@ -41,7 +44,7 @@ class ScoreView extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "0", // TODO : Display score
+                        gameState.userScore.toString(),
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -63,7 +66,7 @@ class ScoreView extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "0", // TODO : Display score
+                        gameState.friendScore.toString(),
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,

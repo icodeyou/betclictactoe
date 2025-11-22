@@ -1,11 +1,15 @@
+import 'package:betclictactoe/presentation/game/notifier/game_notifier.dart';
 import 'package:betclictactoe/presentation/shared/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class GameOptionsView extends StatelessWidget {
+class GameOptionsView extends ConsumerWidget {
   const GameOptionsView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final gameState = ref.watch(gameNotifierProvider);
+    final gameNotifier = ref.read(gameNotifierProvider.notifier);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       spacing: 8,
@@ -20,9 +24,9 @@ class GameOptionsView extends StatelessWidget {
           ),
         ),
         Switch(
-          value: true,
+          value: gameState.isPlayingFirstWithX,
           onChanged: (newValue) {
-            print(newValue);
+            gameNotifier.togglePlayingFirst();
           },
         ),
       ],
