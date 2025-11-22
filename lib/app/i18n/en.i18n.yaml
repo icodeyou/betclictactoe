@@ -19,5 +19,5 @@ settingsScreen:
 gameScreen:
   title: Play
   restartButtonLabel: Restart
-  playFirstLabel: is playing first with X
+  playFirstLabel: I am playing first with X
   friendScoreLabel: Friend

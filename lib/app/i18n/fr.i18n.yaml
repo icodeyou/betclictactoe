@@ -19,5 +19,5 @@ settingsScreen:
 gameScreen:
   title: Jeu
   restartButtonLabel: Recommencer
-  playFirstLabel: joue en 1er avec X
+  playFirstLabel: Je joue en 1er avec X
   friendScoreLabel: Ami

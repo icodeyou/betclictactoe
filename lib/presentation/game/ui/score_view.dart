@@ -3,6 +3,7 @@ import 'package:betclictactoe/presentation/game/notifier/game_notifier.dart';
 import 'package:betclictactoe/presentation/game/ui/game_options_view.dart';
 import 'package:betclictactoe/presentation/game/ui/points_view.dart';
 import 'package:betclictactoe/presentation/shared/theme/theme_colors.dart';
+import 'package:betclictactoe/presentation/shared/theme/theme_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -26,10 +27,10 @@ class ScoreView extends ConsumerWidget {
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: ThemeSizes.m.asInsets,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          spacing: 8,
+          spacing: ThemeSizes.xs,
           children: [
             Row(
               children: [

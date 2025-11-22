@@ -25,8 +25,10 @@ class AppButton extends StatelessWidget {
     return FilledButton(
       onPressed: onPressed,
       style: FilledButton.styleFrom(
-        textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+        padding: EdgeInsets.symmetric(
+          horizontal: ThemeSizes.xxl,
+          vertical: ThemeSizes.m,
+        ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
         backgroundColor: overDarkBackground ? Colors.white : null,
       ),
@@ -38,6 +40,7 @@ class AppButton extends StatelessWidget {
           AppText(
             text,
             fontSize: ThemeFontSizes.l,
+            fontWeight: FontWeight.bold,
             color:
                 foregroundColor ??
                 (overDarkBackground ? ThemeColors.primary : Colors.white),

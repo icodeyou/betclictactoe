@@ -1,4 +1,5 @@
 import 'package:betclictactoe/presentation/game/ui/cell_view.dart';
+import 'package:betclictactoe/presentation/shared/theme/theme_sizes.dart';
 import 'package:betclictactoe/utils/app_constants.dart';
 import 'package:flutter/material.dart';
 
@@ -25,8 +26,8 @@ class _PlayViewState extends State<PlayView>
         crossAxisCount: AppConstants.gridSize,
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        mainAxisSpacing: 8.0,
-        crossAxisSpacing: 8.0,
+        mainAxisSpacing: ThemeSizes.xs,
+        crossAxisSpacing: ThemeSizes.xs,
         children: List.generate(
           AppConstants.gridSize * AppConstants.gridSize,
           (i) => CellView(index: i, animationController: _animationController),

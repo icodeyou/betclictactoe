@@ -3,6 +3,7 @@ import 'package:betclictactoe/presentation/game/notifier/play_notifier.dart';
 import 'package:betclictactoe/presentation/game/ui/play_view.dart';
 import 'package:betclictactoe/presentation/game/ui/score_view.dart';
 import 'package:betclictactoe/presentation/shared/theme/theme_colors.dart';
+import 'package:betclictactoe/presentation/shared/theme/theme_sizes.dart';
 import 'package:betclictactoe/presentation/shared/widgets/app_back_button.dart';
 import 'package:betclictactoe/presentation/shared/widgets/app_button.dart';
 import 'package:betclictactoe/presentation/shared/widgets/app_text.dart';
@@ -28,13 +29,13 @@ class GameScreen extends ConsumerWidget {
       ),
       body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.all(16.0),
+          padding: ThemeSizes.m.asInsets,
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            spacing: 16,
+            spacing: ThemeSizes.m,
             children: [
               ScoreView(),
-              SizedBox(height: 16),
+              SizedBox(height: ThemeSizes.m),
               Expanded(child: Center(child: PlayView())),
               AppButton(
                 onPressed: () {

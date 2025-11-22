@@ -2,6 +2,7 @@ import 'package:betclictactoe/app/i18n/translations.g.dart';
 import 'package:betclictactoe/app/routing/paths.dart';
 import 'package:betclictactoe/presentation/shared/controller/audio_controller.dart';
 import 'package:betclictactoe/presentation/shared/theme/theme_colors.dart';
+import 'package:betclictactoe/presentation/shared/theme/theme_sizes.dart';
 import 'package:betclictactoe/presentation/shared/widgets/app_button.dart';
 import 'package:betclictactoe/presentation/shared/widgets/app_text.dart';
 import 'package:betclictactoe/utils/app_constants.dart';
@@ -23,7 +24,7 @@ class HomeScreen extends ConsumerWidget {
       body: SafeArea(
         child: Center(
           child: Column(
-            spacing: 24,
+            spacing: ThemeSizes.xl,
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -56,7 +57,7 @@ class HomeScreen extends ConsumerWidget {
                 text: t.homeScreen.settingsButtonLabel,
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 32),
+                padding: ThemeSizes.xxl.asInsets.topOnly,
                 child: IconButton(
                   color: Colors.white,
                   onPressed: () {

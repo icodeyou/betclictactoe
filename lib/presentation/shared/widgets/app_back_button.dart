@@ -1,3 +1,4 @@
+import 'package:betclictactoe/presentation/shared/theme/theme_sizes.dart';
 import 'package:flutter/material.dart';
 
 class AppBackButton extends StatelessWidget {
@@ -6,7 +7,7 @@ class AppBackButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      padding: ThemeSizes.xs.asInsets.horizontalOnly,
       child: BackButton(
         style: ButtonStyle(iconSize: WidgetStateProperty.all(45)),
       ),
