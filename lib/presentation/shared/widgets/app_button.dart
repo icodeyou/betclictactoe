@@ -1,4 +1,4 @@
-import 'package:betclictactoe/presentation/shared/theme/app_colors.dart';
+import 'package:betclictactoe/presentation/shared/theme/theme_colors.dart';
 import 'package:flutter/material.dart';
 
 class AppButton extends StatelessWidget {
@@ -24,7 +24,9 @@ class AppButton extends StatelessWidget {
         textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-        foregroundColor: foregroundColor ?? (overDarkBackground ? AppColors.primary : null),
+        foregroundColor:
+            foregroundColor ??
+            (overDarkBackground ? ThemeColors.primary : null),
         backgroundColor: overDarkBackground ? Colors.white : null,
       ),
       child: child,

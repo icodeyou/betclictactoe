@@ -3,7 +3,7 @@ import 'package:betclictactoe/presentation/settings/notifier/settings_notifier.d
 import 'package:betclictactoe/presentation/settings/ui/icon_line.dart';
 import 'package:betclictactoe/presentation/settings/ui/string_line.dart';
 import 'package:betclictactoe/presentation/shared/controller/audio_controller.dart';
-import 'package:betclictactoe/presentation/shared/theme/app_colors.dart';
+import 'package:betclictactoe/presentation/shared/theme/theme_colors.dart';
 import 'package:betclictactoe/presentation/shared/widgets/app_back_button.dart';
 import 'package:flutter/material.dart' hide Colors;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -31,7 +31,7 @@ class SettingsScreen extends ConsumerWidget {
           ),
         ),
       ),
-      backgroundColor: AppColors.backgroundSettings,
+      backgroundColor: ThemeColors.backgroundSettings,
       body: SafeArea(
         child: Column(
           spacing: 60,

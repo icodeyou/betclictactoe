@@ -1,5 +1,5 @@
 import 'package:betclictactoe/presentation/game/notifier/play_notifier.dart';
-import 'package:betclictactoe/presentation/shared/theme/app_colors.dart';
+import 'package:betclictactoe/presentation/shared/theme/theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -45,13 +45,13 @@ class CellView extends ConsumerWidget {
                       // small offset from center
                       center: const Alignment(0.3, 0.3),
                       colors: [
-                        AppColors.secondary.withAlpha(20),
-                        AppColors.secondary.withAlpha(60),
+                        ThemeColors.secondary.withAlpha(20),
+                        ThemeColors.secondary.withAlpha(60),
                       ],
                     ),
                   )
                 : BoxDecoration(
-                    color: AppColors.secondary.withAlpha(
+                    color: ThemeColors.secondary.withAlpha(
                       (200 * animationValue).toInt(),
                     ),
                     shape: BoxShape.circle,
@@ -73,7 +73,7 @@ class CellView extends ConsumerWidget {
                             fontFamily: 'luckiest_guy',
                             fontWeight: FontWeight.bold,
                             color: animationValue == 0
-                                ? AppColors.secondary
+                                ? ThemeColors.secondary
                                 : Colors.white,
                           ),
                         ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AppColors {
+class ThemeColors {
   static Color get primary => const Color.fromARGB(255, 174, 96, 119);
   static Color get secondary => const Color(0xFFE81E2B);
   static Color get background => const Color(0xFFEFF0F1);

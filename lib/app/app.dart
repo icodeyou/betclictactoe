@@ -2,7 +2,7 @@ import 'package:betclictactoe/app/app_lifecycle.dart';
 import 'package:betclictactoe/app/i18n/translations.g.dart';
 import 'package:betclictactoe/app/routing/router.dart';
 import 'package:betclictactoe/app/startup/global_provider.dart';
-import 'package:betclictactoe/presentation/shared/theme/app_colors.dart';
+import 'package:betclictactoe/presentation/shared/theme/theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -60,10 +60,10 @@ class MyApp extends ConsumerWidget {
         theme:
             ThemeData.from(
               colorScheme: ColorScheme.fromSeed(
-                seedColor: AppColors.primary,
-                primary: AppColors.primary,
-                secondary: AppColors.secondary,
-                surface: AppColors.background,
+                seedColor: ThemeColors.primary,
+                primary: ThemeColors.primary,
+                secondary: ThemeColors.secondary,
+                surface: ThemeColors.background,
               ),
               useMaterial3: true,
             ).copyWith(

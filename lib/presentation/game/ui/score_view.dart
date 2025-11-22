@@ -1,7 +1,7 @@
 import 'package:betclictactoe/app/i18n/translations.g.dart';
 import 'package:betclictactoe/presentation/game/notifier/game_notifier.dart';
 import 'package:betclictactoe/presentation/game/ui/game_options_view.dart';
-import 'package:betclictactoe/presentation/shared/theme/app_colors.dart';
+import 'package:betclictactoe/presentation/shared/theme/theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,10 +13,10 @@ class ScoreView extends ConsumerWidget {
     final gameState = ref.watch(gameNotifierProvider);
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.background,
+        color: ThemeColors.background,
         boxShadow: [
           BoxShadow(
-            color: AppColors.secondary.withAlpha(50),
+            color: ThemeColors.secondary.withAlpha(50),
             spreadRadius: 2,
             blurRadius: 5,
             offset: const Offset(0, 3), // changes position of shadow
@@ -40,7 +40,7 @@ class ScoreView extends ConsumerWidget {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: AppColors.primary,
+                          color: ThemeColors.primary,
                         ),
                       ),
                       Text(
@@ -48,7 +48,7 @@ class ScoreView extends ConsumerWidget {
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
-                          color: AppColors.primary,
+                          color: ThemeColors.primary,
                         ),
                       ),
                     ],
@@ -62,7 +62,7 @@ class ScoreView extends ConsumerWidget {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: AppColors.darkText,
+                          color: ThemeColors.darkText,
                         ),
                       ),
                       Text(
@@ -70,7 +70,7 @@ class ScoreView extends ConsumerWidget {
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
-                          color: AppColors.darkText,
+                          color: ThemeColors.darkText,
                         ),
                       ),
                     ],

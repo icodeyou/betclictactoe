@@ -1,6 +1,6 @@
 import 'package:betclictactoe/app/i18n/translations.g.dart';
 import 'package:betclictactoe/presentation/game/notifier/game_notifier.dart';
-import 'package:betclictactoe/presentation/shared/theme/app_colors.dart';
+import 'package:betclictactoe/presentation/shared/theme/theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -23,7 +23,7 @@ class GameOptionsView extends ConsumerWidget {
             style: TextStyle(
               color: gameState.isPlayingFirstWithX
                   ? Theme.of(context).colorScheme.primary
-                  : AppColors.darkText,
+                  : ThemeColors.darkText,
               fontSize: 18,
               fontWeight: FontWeight.w300,
             ),
