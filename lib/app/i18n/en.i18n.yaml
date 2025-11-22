@@ -10,6 +10,8 @@ settingsScreen:
   musicLabel: Music
   credits: Music by Mr Smith
 
-playScreen:
+gameScreen:
   title: Play
   restartButtonLabel: Restart
+  playFirstLabel: I am playing first with X
+  friendScoreLabel: Friend

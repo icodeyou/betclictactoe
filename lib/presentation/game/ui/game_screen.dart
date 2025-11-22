@@ -18,7 +18,7 @@ class GameScreen extends ConsumerWidget {
       appBar: AppBar(
         leading: AppBackButton(),
         title: Text(
-          t.playScreen.title,
+          t.gameScreen.title,
           textAlign: TextAlign.center,
           style: TextStyle(
             fontFamily: 'Permanent Marker',
@@ -46,7 +46,7 @@ class GameScreen extends ConsumerWidget {
                   spacing: 12,
                   children: [
                     Icon(Icons.replay, size: 24),
-                    Text(t.playScreen.restartButtonLabel),
+                    Text(t.gameScreen.restartButtonLabel),
                   ],
                 ),
               ),

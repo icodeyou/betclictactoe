@@ -7,22 +7,23 @@ class GameOptionsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      spacing: 16,
+      mainAxisAlignment: MainAxisAlignment.center,
+      spacing: 8,
       children: [
-        Switch(
-          value: true,
-          onChanged: (newValue) {
-            print(newValue);
-          },
-        ),
         Text(
-          "I am playing first",
+          "I am playing first with X",
 
           style: TextStyle(
             color: AppColors.darkText,
             fontSize: 20,
             fontWeight: FontWeight.w400,
           ),
+        ),
+        Switch(
+          value: true,
+          onChanged: (newValue) {
+            print(newValue);
+          },
         ),
       ],
     );

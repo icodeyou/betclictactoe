@@ -1,3 +1,4 @@
+import 'package:betclictactoe/app/i18n/translations.g.dart';
 import 'package:betclictactoe/presentation/game/ui/game_options_view.dart';
 import 'package:betclictactoe/presentation/shared/theme/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,62 @@ class ScoreView extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: GameOptionsView(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          spacing: 8,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    children: [
+                      Text(
+                        "Me", // TODO : Get from shared preferences
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                      Text(
+                        "0", // TODO : Display score
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Text(
+                        t.gameScreen.friendScoreLabel,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.darkText,
+                        ),
+                      ),
+                      Text(
+                        "0", // TODO : Display score
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.darkText,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Divider(),
+            GameOptionsView(),
+          ],
+        ),
       ),
     );
   }
