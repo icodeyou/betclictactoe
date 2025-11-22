@@ -46,9 +46,9 @@ flutter:
       fonts:
         - asset: assets/fonts/Luckiest_Guy/LuckiestGuy-Regular.ttf
 
-flutter_launcher_icons:
-  android: true
-  ios: true
-  image_path: "assets/icons/icon.png"
-  adaptive_icon_background: "#FFFFFF"
-  adaptive_icon_foreground: "assets/icons/icon-adaptive-foreground.png"
+# flutter_launcher_icons:
+#   android: true
+#   ios: true
+#   image_path: "assets/icons/icon.png"
+#   adaptive_icon_background: "#FFFFFF"
+#   adaptive_icon_foreground: "assets/icons/icon-adaptive-foreground.png"
