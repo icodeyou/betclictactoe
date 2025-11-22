@@ -4,8 +4,7 @@ import 'package:flutter/services.dart';
 void showCustomNameDialog(BuildContext context) {
   showGeneralDialog(
     context: context,
-    pageBuilder: (context, animation, secondaryAnimation) =>
-        CustomNameDialog(animation: animation),
+    pageBuilder: (_, animation, _) => CustomNameDialog(animation: animation),
   );
 }
 

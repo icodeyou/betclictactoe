@@ -1,6 +1,8 @@
 import 'package:betclictactoe/app/i18n/translations.g.dart';
-import 'package:betclictactoe/presentation/settings/ui/custom_name_dialog.dart';
+import 'package:betclictactoe/presentation/settings/ui/icon_line.dart';
+import 'package:betclictactoe/presentation/settings/ui/string_line.dart';
 import 'package:betclictactoe/presentation/shared/controller/audio_controller.dart';
+import 'package:betclictactoe/presentation/shared/controller/shared_pref_controller.dart';
 import 'package:betclictactoe/presentation/shared/theme/app_colors.dart';
 import 'package:betclictactoe/presentation/shared/widgets/app_back_button.dart';
 import 'package:flutter/material.dart' hide Colors;
@@ -11,8 +13,10 @@ class SettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final audioControllerNotifier = ref.watch(audioControllerProvider.notifier);
-    final audioControllerState = ref.watch(audioControllerProvider);
+    final audioNotifier = ref.watch(audioControllerProvider.notifier);
+    final audioState = ref.watch(audioControllerProvider);
+
+    final sharedPrefNotifier = ref.watch(sharedPrefControllerProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(
@@ -40,27 +44,26 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 child: ListView(
                   children: [
-                    _NameChangeLine(t.settingsScreen.nameLabel),
-                    _SettingsLine(
-                      t.settingsScreen.soundFXLabel,
-                      Icon(
-                        audioControllerState.sfxOn
-                            ? Icons.graphic_eq
-                            : Icons.volume_off,
+                    StringLine(
+                      title: t.settingsScreen.nameLabel,
+                      value: sharedPrefNotifier.getPlayerName(),
+                    ),
+                    IconLine(
+                      title: t.settingsScreen.soundFXLabel,
+                      icon: Icon(
+                        audioState.sfxOn ? Icons.graphic_eq : Icons.volume_off,
                       ),
                       onSelected: () {
-                        audioControllerNotifier.toggleSound();
+                        audioNotifier.toggleSound();
                       },
                     ),
-                    _SettingsLine(
-                      t.settingsScreen.musicLabel,
-                      Icon(
-                        audioControllerState.musicOn
-                            ? Icons.music_note
-                            : Icons.music_off,
+                    IconLine(
+                      title: t.settingsScreen.musicLabel,
+                      icon: Icon(
+                        audioState.musicOn ? Icons.music_note : Icons.music_off,
                       ),
                       onSelected: () {
-                        audioControllerNotifier.toggleMusic();
+                        audioNotifier.toggleMusic();
                       },
                     ),
                   ],
@@ -68,83 +71,6 @@ class SettingsScreen extends ConsumerWidget {
               ),
             ),
             Text(t.settingsScreen.credits),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _NameChangeLine extends StatelessWidget {
-  final String title;
-
-  const _NameChangeLine(this.title);
-
-  @override
-  Widget build(BuildContext context) {
-    return InkResponse(
-      highlightShape: BoxShape.rectangle,
-      onTap: () => showCustomNameDialog(context),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              title,
-              style: const TextStyle(
-                fontFamily: 'Permanent Marker',
-                fontSize: 30,
-              ),
-            ),
-            const Spacer(),
-            Text(
-              t
-                  .settingsScreen
-                  .defaultName, // TODO : Get value from shared preferences, and change with dialog
-              style: const TextStyle(
-                fontFamily: 'Permanent Marker',
-                fontSize: 30,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _SettingsLine extends StatelessWidget {
-  final String title;
-
-  final Widget icon;
-
-  final VoidCallback? onSelected;
-
-  const _SettingsLine(this.title, this.icon, {this.onSelected});
-
-  @override
-  Widget build(BuildContext context) {
-    return InkResponse(
-      highlightShape: BoxShape.rectangle,
-      onTap: onSelected,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Text(
-                title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontFamily: 'Permanent Marker',
-                  fontSize: 30,
-                ),
-              ),
-            ),
-            icon,
           ],
         ),
       ),
