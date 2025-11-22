@@ -36,7 +36,7 @@ class ScoreView extends ConsumerWidget {
                   child: Column(
                     children: [
                       Text(
-                        "Me", // TODO : Get from shared preferences
+                        gameState.playerName,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,

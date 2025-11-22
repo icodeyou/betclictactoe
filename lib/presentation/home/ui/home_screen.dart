@@ -14,7 +14,7 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final audioControllerNotifier = ref.watch(audioControllerProvider.notifier);
+    final audioControllerNotifier = ref.read(audioControllerProvider.notifier);
     final audioControllerState = ref.watch(audioControllerProvider);
 
     return Scaffold(

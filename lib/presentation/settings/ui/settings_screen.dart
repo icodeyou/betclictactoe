@@ -1,8 +1,8 @@
 import 'package:betclictactoe/app/i18n/translations.g.dart';
+import 'package:betclictactoe/presentation/settings/notifier/settings_notifier.dart';
 import 'package:betclictactoe/presentation/settings/ui/icon_line.dart';
 import 'package:betclictactoe/presentation/settings/ui/string_line.dart';
 import 'package:betclictactoe/presentation/shared/controller/audio_controller.dart';
-import 'package:betclictactoe/presentation/shared/controller/shared_pref_controller.dart';
 import 'package:betclictactoe/presentation/shared/theme/app_colors.dart';
 import 'package:betclictactoe/presentation/shared/widgets/app_back_button.dart';
 import 'package:flutter/material.dart' hide Colors;
@@ -13,10 +13,10 @@ class SettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final audioNotifier = ref.watch(audioControllerProvider.notifier);
+    final audioNotifier = ref.read(audioControllerProvider.notifier);
     final audioState = ref.watch(audioControllerProvider);
 
-    final sharedPrefNotifier = ref.watch(sharedPrefControllerProvider.notifier);
+    final playerName = ref.watch(settingsNotifierProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -46,7 +46,7 @@ class SettingsScreen extends ConsumerWidget {
                   children: [
                     StringLine(
                       title: t.settingsScreen.nameLabel,
-                      value: sharedPrefNotifier.getPlayerName(),
+                      value: playerName,
                     ),
                     IconLine(
                       title: t.settingsScreen.soundFXLabel,

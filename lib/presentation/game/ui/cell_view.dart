@@ -16,7 +16,7 @@ class CellView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final playState = ref.watch(playNotifierProvider);
-    final playStateNotifier = ref.watch(playNotifierProvider.notifier);
+    final playStateNotifier = ref.read(playNotifierProvider.notifier);
     final emptyCell =
         !playState.xTicks.contains(index) && !playState.oTicks.contains(index);
 

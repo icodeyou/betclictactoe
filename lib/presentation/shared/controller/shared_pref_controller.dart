@@ -4,9 +4,7 @@ import 'package:riverpod/riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sharedPrefControllerProvider =
-    NotifierProvider<SharedPrefController, void>(
-  SharedPrefController.new,
-);
+    NotifierProvider<SharedPrefController, void>(SharedPrefController.new);
 
 class SharedPrefController extends Notifier<void> {
   SharedPreferences get prefs => ref.watch(sharedPrefProvider).requireValue;

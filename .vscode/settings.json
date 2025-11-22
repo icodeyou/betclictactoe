@@ -1,31 +1,32 @@
 {
-    "cSpell.words": [
-      "audioplayers",
-      "Azul",
-      "Betclic",
-      "betclictactoe",
-      "Chawroka",
-      "dsht",
-      "fwfwfwfw",
-      "fwfwfwfwfw",
-      "Hemn",
-      "huhsh",
-      "prefs",
-      "snippings",
-      "Sonorus",
-      "spsh",
-      "swishswish",
-      "Tictactoe",
-      "wehee",
-      "wssh"
-    ],
-    "cSpell.overrides": [
-      {
-        "filename": "**/*.i18n.yaml"
-      },
-      {
-        "language": "fr,en",
-        "filename": "**/*fr.i18n.yaml"
-      }
-    ],
+  "cSpell.words": [
+    "audioplayers",
+    "Azul",
+    "Betclic",
+    "betclictactoe",
+    "Chawroka",
+    "dsht",
+    "fwfwfwfw",
+    "fwfwfwfwfw",
+    "Hemn",
+    "huhsh",
+    "prefs",
+    "snippings",
+    "Sonorus",
+    "spsh",
+    "swishswish",
+    "Textfields",
+    "Tictactoe",
+    "wehee",
+    "wssh"
+  ],
+  "cSpell.overrides": [
+    {
+      "filename": "**/*.i18n.yaml"
+    },
+    {
+      "language": "fr,en",
+      "filename": "**/*fr.i18n.yaml"
+    }
+  ],
 }

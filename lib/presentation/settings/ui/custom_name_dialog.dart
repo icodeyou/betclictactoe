@@ -1,24 +1,33 @@
+import 'package:betclictactoe/presentation/settings/notifier/settings_notifier.dart';
+import 'package:betclictactoe/utils/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 void showCustomNameDialog(BuildContext context) {
   showGeneralDialog(
     context: context,
+    barrierDismissible: true,
+    barrierLabel: '',
     pageBuilder: (_, animation, _) => CustomNameDialog(animation: animation),
   );
 }
 
-class CustomNameDialog extends StatefulWidget {
+class CustomNameDialog extends ConsumerStatefulWidget {
   final Animation<double> animation;
 
   const CustomNameDialog({required this.animation, super.key});
 
   @override
-  State<CustomNameDialog> createState() => _CustomNameDialogState();
+  ConsumerState<CustomNameDialog> createState() => _CustomNameDialogState();
 }
 
-class _CustomNameDialogState extends State<CustomNameDialog> {
+class _CustomNameDialogState extends ConsumerState<CustomNameDialog> {
   final TextEditingController _controller = TextEditingController();
+
+  SettingsNotifier get settingsNotifier =>
+      ref.read(settingsNotifierProvider.notifier);
 
   @override
   Widget build(BuildContext context) {
@@ -33,26 +42,30 @@ class _CustomNameDialogState extends State<CustomNameDialog> {
           TextField(
             controller: _controller,
             autofocus: true,
-            maxLength: 12,
+            maxLength: AppConstants.playerNameMaxLength,
             maxLengthEnforcement: MaxLengthEnforcement.enforced,
             textAlign: TextAlign.center,
             textCapitalization: TextCapitalization.words,
             textInputAction: TextInputAction.done,
-            onChanged: (value) {
-              // TODO : Call notifier to change name
-            },
             onSubmitted: (value) {
-              // Player tapped 'Submit'/'Done' on their keyboard.
-              Navigator.pop(context);
+              _onSubmit(context, value);
             },
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () {
+              _onSubmit(context, _controller.text);
+            },
             child: const Text('Close'),
           ),
         ],
       ),
     );
+  }
+
+  Future<void> _onSubmit(BuildContext context, String value) async {
+    final goRouter = GoRouter.of(context);
+    await settingsNotifier.setPlayerName(value);
+    goRouter.pop();
   }
 
   @override
@@ -64,6 +77,6 @@ class _CustomNameDialogState extends State<CustomNameDialog> {
   @override
   void initState() {
     super.initState();
-    // TODO : Get name from notifier
+    _controller.text = ref.read(settingsNotifierProvider);
   }
 }
