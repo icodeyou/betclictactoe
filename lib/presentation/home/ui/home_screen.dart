@@ -1,7 +1,7 @@
 import 'package:betclictactoe/app/i18n/translations.g.dart';
 import 'package:betclictactoe/app/routing/paths.dart';
-import 'package:betclictactoe/presentation/shared/theme/app_colors.dart';
 import 'package:betclictactoe/presentation/shared/controller/audio_controller.dart';
+import 'package:betclictactoe/presentation/shared/theme/app_colors.dart';
 import 'package:betclictactoe/presentation/shared/widgets/app_button.dart';
 import 'package:betclictactoe/utils/app_constants.dart';
 import 'package:betclictactoe/utils/audio/sounds.dart';
@@ -45,6 +45,7 @@ class HomeScreen extends ConsumerWidget {
               ),
               AppButton(
                 overDarkBackground: true,
+                foregroundColor: AppColors.secondary,
                 onPressed: () {
                   audioControllerNotifier.playSfx(SfxType.buttonTap);
                   GoRouter.of(context).goNamed(Paths.game.name);

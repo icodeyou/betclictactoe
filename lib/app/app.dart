@@ -61,6 +61,7 @@ class MyApp extends ConsumerWidget {
             ThemeData.from(
               colorScheme: ColorScheme.fromSeed(
                 seedColor: AppColors.primary,
+                primary: AppColors.primary,
                 secondary: AppColors.secondary,
                 surface: AppColors.background,
               ),

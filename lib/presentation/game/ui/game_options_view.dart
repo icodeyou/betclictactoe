@@ -15,12 +15,18 @@ class GameOptionsView extends ConsumerWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       spacing: 8,
       children: [
-        Text(
-          t.gameScreen.playFirstLabel,
-          style: TextStyle(
-            color: AppColors.darkText,
-            fontSize: 20,
-            fontWeight: FontWeight.w400,
+        Expanded(
+          child: Text(
+            ' ${gameState.playerName} ${t.gameScreen.playFirstLabel}',
+            maxLines: 2,
+            textAlign: TextAlign.right,
+            style: TextStyle(
+              color: gameState.isPlayingFirstWithX
+                  ? Theme.of(context).colorScheme.primary
+                  : AppColors.darkText,
+              fontSize: 18,
+              fontWeight: FontWeight.w300,
+            ),
           ),
         ),
         Switch(
