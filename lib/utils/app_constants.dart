@@ -17,7 +17,7 @@ class AppConstants {
   /// sound (a new sound will stop the previous one). Background music does not
   /// count into the [polyphony] limit.
   /// This value should be at least `1`.
-  static const int polyphony = 2;
+  static const int polyphony = 4;
 
   /// Game
   static const int gridSize = 3;
