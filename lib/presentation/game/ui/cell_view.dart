@@ -1,4 +1,4 @@
-import 'package:betclictactoe/presentation/game/notifier/play_notifier.dart';
+import 'package:betclictactoe/presentation/game/notifier/play_friend_notifier.dart';
 import 'package:betclictactoe/presentation/shared/theme/theme_colors.dart';
 import 'package:betclictactoe/presentation/shared/widgets/app_text.dart';
 import 'package:betclictactoe/utils/app_constants.dart';
@@ -19,8 +19,8 @@ class CellView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final playState = ref.watch(playNotifierProvider);
-    final playStateNotifier = ref.read(playNotifierProvider.notifier);
+    final playState = ref.watch(playFriendNotifierProvider);
+    final playStateNotifier = ref.read(playFriendNotifierProvider.notifier);
     final emptyCell =
         !playState.xTicks.contains(index) && !playState.oTicks.contains(index);
 

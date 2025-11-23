@@ -5,10 +5,12 @@ import 'package:betclictactoe/utils/audio/sounds.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final playNotifierProvider =
-    NotifierProvider.autoDispose<PlayNotifier, PlayState>(() => PlayNotifier());
+final playFriendNotifierProvider =
+    NotifierProvider.autoDispose<PlayFriendNotifier, PlayState>(
+      () => PlayFriendNotifier(),
+    );
 
-class PlayNotifier extends Notifier<PlayState> {
+class PlayFriendNotifier extends Notifier<PlayState> {
   GameNotifier get _gameNotifier => ref.read(gameNotifierProvider.notifier);
   AudioController get _audioController =>
       ref.read(audioControllerProvider.notifier);
