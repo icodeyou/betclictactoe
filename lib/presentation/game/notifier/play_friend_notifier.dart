@@ -2,7 +2,6 @@ import 'package:betclictactoe/presentation/game/notifier/game_notifier.dart';
 import 'package:betclictactoe/presentation/game/notifier/play_state.dart';
 import 'package:betclictactoe/presentation/shared/controller/audio_controller.dart';
 import 'package:betclictactoe/utils/audio/sounds.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final playFriendNotifierProvider =
@@ -23,11 +22,10 @@ class PlayFriendNotifier extends Notifier<PlayState> {
   void tick(int index, Future<void> Function() winningAnimationCallback) {
     final isXTurn = state.isXTurn();
 
-    if (isXTurn) {
-      state = PlayState(xTicks: [...state.xTicks, index], oTicks: state.oTicks);
-    } else {
-      state = PlayState(xTicks: state.xTicks, oTicks: [...state.oTicks, index]);
-    }
+    state = PlayState(
+      xTicks: isXTurn ? [...state.xTicks, index] : state.xTicks,
+      oTicks: isXTurn ? state.oTicks : [...state.oTicks, index],
+    );
 
     final winningIndexes = state.getWinningIndexes();
     if (winningIndexes.isEmpty) {
@@ -44,10 +42,5 @@ class PlayFriendNotifier extends Notifier<PlayState> {
     winningAnimationCallback().then((_) {
       ref.invalidateSelf();
     });
-  }
-
-  Future<void> launchAnimation(AnimationController animationController) async {
-    await animationController.forward();
-    await animationController.reverse();
   }
 }
