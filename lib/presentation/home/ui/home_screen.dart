@@ -45,9 +45,17 @@ class HomeScreen extends ConsumerWidget {
                 overDarkBackground: true,
                 foregroundColor: ThemeColors.secondary,
                 onPressed: () {
-                  GoRouter.of(context).goNamed(Paths.game.name);
+                  GoRouter.of(context).goNamed(Paths.gameFriend.name);
                 },
-                text: t.homeScreen.playButtonLabel,
+                text: t.homeScreen.playFriendButtonLabel,
+              ),
+              AppButton(
+                overDarkBackground: true,
+                foregroundColor: ThemeColors.secondary,
+                onPressed: () {
+                  GoRouter.of(context).goNamed(Paths.gameAI.name);
+                },
+                text: t.homeScreen.playAIButtonLabel,
               ),
               AppButton(
                 onPressed: () {

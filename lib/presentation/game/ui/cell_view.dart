@@ -10,10 +10,12 @@ class CellView extends ConsumerWidget {
     super.key,
     required this.index,
     required this.animationController,
+    required this.againstAI,
   });
 
   final int index;
   final AnimationController animationController;
+  final bool againstAI;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

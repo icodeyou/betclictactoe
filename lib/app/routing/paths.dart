@@ -14,7 +14,9 @@ class Path {
 class Paths {
   static const home = Path(path: '/home', name: 'home_screen');
 
-  static const game = Path(path: '/game', name: 'game_screen');
+  static const gameFriend = Path(path: '/game_friend', name: 'game_friend_screen');
+
+  static const gameAI = Path(path: '/game_ai', name: 'game_ai_screen');
 
   static const settings = Path(path: '/settings', name: 'settings_screen');
 }

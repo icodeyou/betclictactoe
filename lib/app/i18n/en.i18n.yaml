@@ -4,7 +4,8 @@ splashScreen:
   retryButtonLabel: Retry
 
 homeScreen:
-  playButtonLabel: Play with a friend
+  playFriendButtonLabel: Play with a friend
+  playAIButtonLabel: Play against AI
   settingsButtonLabel: Settings
 
 settingsScreen:
@@ -21,3 +22,4 @@ gameScreen:
   restartButtonLabel: Restart
   playFirstLabel: I am playing first with X
   friendScoreLabel: Friend
+  aiScoreLabel: AI

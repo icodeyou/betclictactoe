@@ -20,11 +20,19 @@ final router = GoRouter(
       builder: (context, state) => const HomeScreen(),
       routes: [
         GoRoute(
-          path: Paths.game.path,
-          name: Paths.game.name,
+          path: Paths.gameFriend.path,
+          name: Paths.gameFriend.name,
           pageBuilder: (context, state) => buildPlayTransition<void>(
             color: ThemeColors.background,
-            child: const GameScreen(),
+            child: const GameScreen(againstAI: false),
+          ),
+        ),
+        GoRoute(
+          path: Paths.gameAI.path,
+          name: Paths.gameAI.name,
+          pageBuilder: (context, state) => buildPlayTransition<void>(
+            color: ThemeColors.background,
+            child: const GameScreen(againstAI: true),
           ),
         ),
         GoRoute(

@@ -12,7 +12,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class GameScreen extends ConsumerWidget {
-  const GameScreen({super.key});
+  const GameScreen({super.key, required this.againstAI});
+
+  final bool againstAI;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -34,9 +36,9 @@ class GameScreen extends ConsumerWidget {
             mainAxisSize: MainAxisSize.min,
             spacing: ThemeSizes.m,
             children: [
-              ScoreView(),
+              ScoreView(againstAI: againstAI),
               SizedBox(height: ThemeSizes.m),
-              PlayView(),
+              PlayView(againstAI: againstAI),
               AppButton(
                 onPressed: () {
                   ref.invalidate(playNotifierProvider);

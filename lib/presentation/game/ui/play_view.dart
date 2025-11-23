@@ -4,7 +4,9 @@ import 'package:betclictactoe/utils/app_constants.dart';
 import 'package:flutter/material.dart';
 
 class PlayView extends StatefulWidget {
-  const PlayView({super.key});
+  const PlayView({super.key, required this.againstAI});
+
+  final bool againstAI;
 
   @override
   State<PlayView> createState() => _PlayViewState();
@@ -30,7 +32,11 @@ class _PlayViewState extends State<PlayView>
         crossAxisSpacing: ThemeSizes.xs,
         children: List.generate(
           AppConstants.gridSize * AppConstants.gridSize,
-          (i) => CellView(index: i, animationController: _animationController),
+          (i) => CellView(
+            index: i,
+            animationController: _animationController,
+            againstAI: widget.againstAI,
+          ),
         ),
       ),
     );

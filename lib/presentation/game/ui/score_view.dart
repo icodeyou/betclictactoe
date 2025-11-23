@@ -8,7 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ScoreView extends ConsumerWidget {
-  const ScoreView({super.key});
+  const ScoreView({super.key, required this.againstAI});
+
+  final bool againstAI;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -43,7 +45,7 @@ class ScoreView extends ConsumerWidget {
                 ),
                 Expanded(
                   child: PointsView(
-                    player: t.gameScreen.friendScoreLabel,
+                    player: againstAI ? t.gameScreen.aiScoreLabel : t.gameScreen.friendScoreLabel,
                     points: gameState.friendScore,
                     color: ThemeColors.darkText,
                   ),
