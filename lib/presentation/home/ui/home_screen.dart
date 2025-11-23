@@ -6,7 +6,6 @@ import 'package:betclictactoe/presentation/shared/theme/theme_sizes.dart';
 import 'package:betclictactoe/presentation/shared/widgets/app_button.dart';
 import 'package:betclictactoe/presentation/shared/widgets/app_text.dart';
 import 'package:betclictactoe/utils/app_constants.dart';
-import 'package:betclictactoe/utils/audio/sounds.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -46,14 +45,12 @@ class HomeScreen extends ConsumerWidget {
                 overDarkBackground: true,
                 foregroundColor: ThemeColors.secondary,
                 onPressed: () {
-                  audioControllerNotifier.playSfx(SfxType.buttonTap);
                   GoRouter.of(context).goNamed(Paths.game.name);
                 },
                 text: t.homeScreen.playButtonLabel,
               ),
               AppButton(
                 onPressed: () {
-                  audioControllerNotifier.playSfx(SfxType.buttonTap);
                   GoRouter.of(context).goNamed(Paths.settings.name);
                 },
                 text: t.homeScreen.settingsButtonLabel,

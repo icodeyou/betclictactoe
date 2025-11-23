@@ -1,18 +1,17 @@
 const Set<Song> songs = {
   // Warning: Filenames with whitespace break package:audioplayers on iOS
-  Song('Mr_Smith-Azul.mp3', 'Azul', artist: 'Mr Smith'),
-  Song('Mr_Smith-Sonorus.mp3', 'Sonorus', artist: 'Mr Smith'),
-  Song('Mr_Smith-Sunday_Solitude.mp3', 'SundaySolitude', artist: 'Mr Smith'),
+  Song('song-jazz.mp3', artist: 'Music_For_Videos'),
+  Song('song-piano-adventure.mp3', artist: 'Music_For_Videos'),
+  Song('song-stranger.mp3', artist: 'Osynthw'),
+  Song('song-electro.mp3', artist: 'ED-MusicProductions'),
 };
 
 class Song {
   final String filename;
 
-  final String name;
-
   final String? artist;
 
-  const Song(this.filename, this.name, {this.artist});
+  const Song(this.filename, {this.artist});
 
   @override
   String toString() => 'Song<$filename>';

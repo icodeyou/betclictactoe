@@ -72,7 +72,7 @@ class PlayNotifier extends Notifier<PlayState> {
     if (winningIndexes.isEmpty) {
       ref
           .read(audioControllerProvider.notifier)
-          .playSfx(isXTurn ? SfxType.huhsh : SfxType.wssh);
+          .playSfx(isXTurn ? SfxType.xTick : SfxType.yTick);
       return;
     }
 

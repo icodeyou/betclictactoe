@@ -1,1 +1,1 @@
-Sounds in this folder are made by Filip Hracek and are CC0 (Public Domain).
+Sounds in this folder were all found on Pixabay and are free to use.

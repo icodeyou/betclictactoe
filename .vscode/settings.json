@@ -29,4 +29,9 @@
       "filename": "**/*fr.i18n.yaml"
     }
   ],
+  "cSpell.ignorePaths": [
+    "lib/utils/audio/**",
+    "**/*.mp3"
+  ],
+  "cSpell.useGitignore": false
 }

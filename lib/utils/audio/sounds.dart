@@ -1,34 +1,32 @@
 List<String> soundTypeToFilename(SfxType type) => switch (type) {
-  SfxType.huhsh => const ['hash1.mp3', 'hash2.mp3', 'hash3.mp3'],
-  SfxType.wssh => const [
-    'wssh1.mp3',
-    'wssh2.mp3',
-    'dsht1.mp3',
-    'ws1.mp3',
-    'spsh1.mp3',
-    'hh1.mp3',
-    'hh2.mp3',
-    'kss1.mp3',
+  SfxType.xTick => const ['pop.mp3'],
+  SfxType.yTick => const ['pop2.mp3'],
+  SfxType.buttonTap => const [
+    'shine.mp3',
+    'shine2.mp3',
+    'shine3.mp3',
+    'shine4.mp3',
   ],
-  SfxType.buttonTap => const ['k1.mp3', 'k2.mp3', 'p1.mp3', 'p2.mp3'],
-  SfxType.congrats => const ['yay1.mp3', 'wehee1.mp3', 'oo1.mp3'],
-  SfxType.erase => const ['fwfwfwfwfw1.mp3', 'fwfwfwfw1.mp3'],
-  SfxType.swishSwish => const ['swishswish1.mp3'],
+  SfxType.congrats => const [
+    'win.mp3',
+    'win3.mp3',
+    'win4.mp3',
+    'win4.mp3',
+    'congrats.mp3',
+  ],
 };
 
 /// Allows control over loudness of different SFX types.
 double soundTypeToVolume(SfxType type) {
   switch (type) {
-    case SfxType.huhsh:
+    case SfxType.xTick:
+    case SfxType.yTick:
       return 0.4;
-    case SfxType.wssh:
-      return 0.2;
     case SfxType.buttonTap:
+      return 0.8;
     case SfxType.congrats:
-    case SfxType.erase:
-    case SfxType.swishSwish:
       return 1.0;
   }
 }
 
-enum SfxType { huhsh, wssh, buttonTap, congrats, erase, swishSwish }
+enum SfxType { xTick, yTick, buttonTap, congrats }
