@@ -1,4 +1,5 @@
 import 'package:betclictactoe/app/i18n/translations.g.dart';
+import 'package:betclictactoe/presentation/game/notifier/play_ai_notifier.dart';
 import 'package:betclictactoe/presentation/game/notifier/play_friend_notifier.dart';
 import 'package:betclictactoe/presentation/game/ui/play_view.dart';
 import 'package:betclictactoe/presentation/game/ui/score_view.dart';
@@ -41,7 +42,11 @@ class GameScreen extends ConsumerWidget {
               PlayView(againstAI: againstAI),
               AppButton(
                 onPressed: () {
-                  ref.invalidate(playFriendNotifierProvider);
+                  if (againstAI) {
+                    ref.invalidate(playAINotifierProvider);
+                  } else {
+                    ref.invalidate(playFriendNotifierProvider);
+                  }
                 },
                 text: t.gameScreen.restartButtonLabel,
                 icon: Icons.replay,

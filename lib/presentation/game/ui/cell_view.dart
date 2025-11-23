@@ -1,9 +1,11 @@
+import 'package:betclictactoe/presentation/game/notifier/i_play_notifier.dart';
 import 'package:betclictactoe/presentation/game/notifier/play_ai_notifier.dart';
 import 'package:betclictactoe/presentation/game/notifier/play_friend_notifier.dart';
 import 'package:betclictactoe/presentation/game/notifier/play_state.dart';
 import 'package:betclictactoe/presentation/shared/theme/theme_colors.dart';
 import 'package:betclictactoe/presentation/shared/widgets/app_text.dart';
 import 'package:betclictactoe/utils/app_constants.dart';
+import 'package:betclictactoe/utils/log.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -22,24 +24,27 @@ class CellView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final PlayState playState;
+    final IPlayNotifier iPlayNotifier;
     if (againstAI) {
+      iPlayNotifier = ref.read(playAINotifierProvider.notifier);
       final playStateAsync = ref.watch(playAINotifierProvider);
       if (playStateAsync.value == null) {
-        playState = PlayState(xTicks: [], oTicks: []);
+        logger.e('@build: playStateAsync.value is null');
+        return const SizedBox.shrink();
       } else {
         playState = playStateAsync.value!;
       }
     } else {
+      iPlayNotifier = ref.read(playFriendNotifierProvider.notifier);
       playState = ref.watch(playFriendNotifierProvider);
     }
-    final playStateNotifier = ref.read(playFriendNotifierProvider.notifier);
     final emptyCell =
         !playState.xTicks.contains(index) && !playState.oTicks.contains(index);
 
     return InkWell(
       onTap: emptyCell && !animationController.isAnimating
           ? () {
-              playStateNotifier.tick(index, () async {
+              iPlayNotifier.tick(index, () async {
                 await animationController.repeat(reverse: true, count: 8);
               });
             }

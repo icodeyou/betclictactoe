@@ -1,4 +1,5 @@
 import 'package:betclictactoe/presentation/game/notifier/game_notifier.dart';
+import 'package:betclictactoe/presentation/game/notifier/i_play_notifier.dart';
 import 'package:betclictactoe/presentation/game/notifier/play_state.dart';
 import 'package:betclictactoe/presentation/shared/controller/audio_controller.dart';
 import 'package:betclictactoe/utils/audio/sounds.dart';
@@ -9,7 +10,7 @@ final playFriendNotifierProvider =
       () => PlayFriendNotifier(),
     );
 
-class PlayFriendNotifier extends Notifier<PlayState> {
+class PlayFriendNotifier extends Notifier<PlayState> implements IPlayNotifier {
   GameNotifier get _gameNotifier => ref.read(gameNotifierProvider.notifier);
   AudioController get _audioController =>
       ref.read(audioControllerProvider.notifier);
@@ -19,6 +20,7 @@ class PlayFriendNotifier extends Notifier<PlayState> {
     return PlayState(xTicks: [], oTicks: []);
   }
 
+  @override
   void tick(int index, Future<void> Function() winningAnimationCallback) {
     final isXTurn = state.isXTurn();
 
