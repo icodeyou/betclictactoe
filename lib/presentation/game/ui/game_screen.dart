@@ -19,6 +19,7 @@ class GameScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final playState = againstAI ? ref.watch(playAINotifierProvider) : null;
     return Scaffold(
       backgroundColor: ThemeColors.background,
       appBar: AppBar(
@@ -41,13 +42,15 @@ class GameScreen extends ConsumerWidget {
               SizedBox(height: ThemeSizes.m),
               PlayView(againstAI: againstAI),
               AppButton(
-                onPressed: () {
-                  if (againstAI) {
-                    ref.invalidate(playAINotifierProvider);
-                  } else {
-                    ref.invalidate(playFriendNotifierProvider);
-                  }
-                },
+                onPressed: playState?.isLoading == true
+                    ? null
+                    : () {
+                        if (againstAI) {
+                          ref.invalidate(playAINotifierProvider);
+                        } else {
+                          ref.invalidate(playFriendNotifierProvider);
+                        }
+                      },
                 text: t.gameScreen.restartButtonLabel,
                 icon: Icons.replay,
               ),

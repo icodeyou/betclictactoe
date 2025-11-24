@@ -27,10 +27,12 @@ class AppButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final audioControllerNotifier = ref.read(audioControllerProvider.notifier);
     return FilledButton(
-      onPressed: () {
-        audioControllerNotifier.playSfx(SfxType.buttonTap);
-        onPressed?.call();
-      },
+      onPressed: onPressed == null
+          ? null
+          : () {
+              audioControllerNotifier.playSfx(SfxType.buttonTap);
+              onPressed?.call();
+            },
       style: FilledButton.styleFrom(
         padding: EdgeInsets.symmetric(
           horizontal: ThemeSizes.xxl,
