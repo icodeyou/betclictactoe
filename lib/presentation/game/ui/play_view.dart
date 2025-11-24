@@ -35,8 +35,8 @@ class _PlayViewState extends State<PlayView>
           AppConstants.gridSize * AppConstants.gridSize,
           (i) => CellView(
             cellPosition: Cell(
-              i ~/ AppConstants.gridSize,
               i % AppConstants.gridSize,
+              i ~/ AppConstants.gridSize,
             ),
             animationController: _animationController,
             againstAI: widget.againstAI,

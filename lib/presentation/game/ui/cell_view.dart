@@ -41,9 +41,7 @@ class CellView extends ConsumerWidget {
       iPlayNotifier = ref.read(playFriendNotifierProvider.notifier);
       board = ref.watch(playFriendNotifierProvider);
     }
-    final tickedCell =
-        board.xPlayed.contains(cellPosition) ||
-        board.oPlayed.contains(cellPosition);
+    final tickedCell = board.isCellTicked(cellPosition);
 
     return InkWell(
       onTap: tickedCell || animationController.isAnimating || isComputerThinking

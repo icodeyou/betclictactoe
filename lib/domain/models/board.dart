@@ -8,6 +8,11 @@ class Board {
   final List<Cell> xPlayed;
   final List<Cell> oPlayed;
 
+  bool isCellTicked(Cell cell) {
+    final debug = xPlayed.contains(cell) || oPlayed.contains(cell);
+    return debug;
+  }
+
   List<Cell> getWinningIndexes() {
     // Winning positions
     final winningPositions = [

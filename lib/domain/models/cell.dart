@@ -1,6 +1,11 @@
-class Cell {
+import 'package:equatable/equatable.dart';
+
+class Cell extends Equatable {
   final int x;
   final int y;
 
-  Cell(this.x, this.y);
+  const Cell(this.x, this.y);
+
+  @override
+  List<Object?> get props => [x, y];
 }
