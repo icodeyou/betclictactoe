@@ -1,3 +1,4 @@
+import 'package:betclictactoe/domain/models/cell.dart';
 import 'package:betclictactoe/presentation/game/ui/cell_view.dart';
 import 'package:betclictactoe/presentation/shared/theme/theme_sizes.dart';
 import 'package:betclictactoe/utils/app_constants.dart';
@@ -33,7 +34,10 @@ class _PlayViewState extends State<PlayView>
         children: List.generate(
           AppConstants.gridSize * AppConstants.gridSize,
           (i) => CellView(
-            index: i,
+            cellPosition: Cell(
+              i ~/ AppConstants.gridSize,
+              i % AppConstants.gridSize,
+            ),
             animationController: _animationController,
             againstAI: widget.againstAI,
           ),

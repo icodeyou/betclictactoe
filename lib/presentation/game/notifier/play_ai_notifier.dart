@@ -1,53 +1,57 @@
 import 'dart:math';
 
+import 'package:betclictactoe/domain/models/board.dart';
+import 'package:betclictactoe/domain/models/cell.dart';
 import 'package:betclictactoe/presentation/game/notifier/game_notifier.dart';
 import 'package:betclictactoe/presentation/game/notifier/i_play_notifier.dart';
-import 'package:betclictactoe/presentation/game/notifier/play_state.dart';
 import 'package:betclictactoe/utils/log.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final playAINotifierProvider =
-    AsyncNotifierProvider.autoDispose<PlayAINotifier, PlayState>(
+    AsyncNotifierProvider.autoDispose<PlayAINotifier, Board>(
       () => PlayAINotifier(),
     );
 
-class PlayAINotifier extends AsyncNotifier<PlayState> with IPlayNotifier {
+class PlayAINotifier extends AsyncNotifier<Board> with IPlayNotifier {
   @override
-  Future<PlayState> build() async {
+  Future<Board> build() async {
     final gameState = ref.watch(gameNotifierProvider);
     if (!gameState.isPlayingFirstWithX) {
       // TODO : Call repo
       await Future.delayed(const Duration(milliseconds: 500));
-      final firstIndexAI = Random().nextInt(9);
-      return PlayState(xTicks: [firstIndexAI], oTicks: []);
+      final firstCellAI = Cell(Random().nextInt(3), Random().nextInt(3));
+      return Board(xPlayed: [firstCellAI], oPlayed: []);
     }
-    return PlayState(xTicks: [], oTicks: []);
+    return Board(xPlayed: [], oPlayed: []);
   }
 
   @override
-  void tick(int index, Future<void> Function() winningAnimationCallback) {
+  void tick(
+    Cell cellPosition,
+    Future<void> Function() winningAnimationCallback,
+  ) {
     if (state.value == null) {
       logger.e('@tick Cannot tick while in loading or error state');
       return;
     }
-    final playState = state.value!;
+    final board = state.value!;
 
-    final mainPlayerPlayingX = playState.isXTurn();
+    final mainPlayerPlayingX = board.isXTurn();
 
-    final newPlayState = PlayState(
-      xTicks: mainPlayerPlayingX
-          ? [...playState.xTicks, index]
-          : playState.xTicks,
-      oTicks: mainPlayerPlayingX
-          ? playState.oTicks
-          : [...playState.oTicks, index],
+    final newBoard = Board(
+      xPlayed: mainPlayerPlayingX
+          ? [...board.xPlayed, cellPosition]
+          : board.xPlayed,
+      oPlayed: mainPlayerPlayingX
+          ? board.oPlayed
+          : [...board.oPlayed, cellPosition],
     );
 
-    state = AsyncData(newPlayState);
+    state = AsyncData(newBoard);
 
     final somebodyWon = handleWinning(
       ref,
-      newPlayState,
+      newBoard,
       mainPlayerPlayingX,
       winningAnimationCallback,
     );
@@ -69,32 +73,35 @@ class PlayAINotifier extends AsyncNotifier<PlayState> with IPlayNotifier {
       logger.e('@aiPlay: Cannot play while in loading or error state');
       return;
     }
-    final playState = state.value!;
+    final board = state.value!;
 
     state = AsyncLoading();
 
-    final allIndexes = List<int>.generate(9, (index) => index);
-    final takenIndexes = [...playState.xTicks, ...playState.oTicks];
-    final availableIndexes = allIndexes
-        .where((index) => !takenIndexes.contains(index))
+    final allCells = List<Cell>.generate(
+      9,
+      (index) => Cell(index ~/ 3, index % 3),
+    );
+    final takenCells = [...board.xPlayed, ...board.oPlayed];
+    final availableCells = allCells
+        .where((cell) => !takenCells.contains(cell))
         .toList();
 
-    if (availableIndexes.isEmpty) {
+    if (availableCells.isEmpty) {
       return;
     }
 
     // Replace by repo
     await Future.delayed(const Duration(milliseconds: 1000));
-    final aiIndex = availableIndexes.first;
+    final aiCell = availableCells.first;
 
     state = AsyncData(
-      PlayState(
-        xTicks: aiPlayingWithX
-            ? [...playState.xTicks, aiIndex]
-            : playState.xTicks,
-        oTicks: aiPlayingWithX
-            ? playState.oTicks
-            : [...playState.oTicks, aiIndex],
+      Board(
+        xPlayed: aiPlayingWithX
+            ? [...board.xPlayed, aiCell]
+            : board.xPlayed,
+        oPlayed: aiPlayingWithX
+            ? board.oPlayed
+            : [...board.oPlayed, aiCell],
       ),
     );
   }

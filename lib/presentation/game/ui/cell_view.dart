@@ -1,7 +1,8 @@
+import 'package:betclictactoe/domain/models/board.dart';
+import 'package:betclictactoe/domain/models/cell.dart';
 import 'package:betclictactoe/presentation/game/notifier/i_play_notifier.dart';
 import 'package:betclictactoe/presentation/game/notifier/play_ai_notifier.dart';
 import 'package:betclictactoe/presentation/game/notifier/play_friend_notifier.dart';
-import 'package:betclictactoe/presentation/game/notifier/play_state.dart';
 import 'package:betclictactoe/presentation/shared/theme/theme_colors.dart';
 import 'package:betclictactoe/presentation/shared/widgets/app_text.dart';
 import 'package:betclictactoe/utils/app_constants.dart';
@@ -12,42 +13,43 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class CellView extends ConsumerWidget {
   const CellView({
     super.key,
-    required this.index,
+    required this.cellPosition,
     required this.animationController,
     required this.againstAI,
   });
 
-  final int index;
+  final Cell cellPosition;
   final AnimationController animationController;
   final bool againstAI;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final PlayState playState;
+    final Board board;
     final IPlayNotifier iPlayNotifier;
     bool isComputerThinking = false;
     if (againstAI) {
       iPlayNotifier = ref.read(playAINotifierProvider.notifier);
-      final playStateAsync = ref.watch(playAINotifierProvider);
-      isComputerThinking = playStateAsync.isLoading;
-      if (playStateAsync.value == null) {
-        logger.e('@build: playStateAsync.value is null');
+      final boardAsync = ref.watch(playAINotifierProvider);
+      isComputerThinking = boardAsync.isLoading;
+      if (boardAsync.value == null) {
+        logger.e('@build: boardAsync.value is null');
         return const SizedBox.shrink();
       } else {
-        playState = playStateAsync.value!;
+        board = boardAsync.value!;
       }
     } else {
       iPlayNotifier = ref.read(playFriendNotifierProvider.notifier);
-      playState = ref.watch(playFriendNotifierProvider);
+      board = ref.watch(playFriendNotifierProvider);
     }
     final tickedCell =
-        playState.xTicks.contains(index) || playState.oTicks.contains(index);
+        board.xPlayed.contains(cellPosition) ||
+        board.oPlayed.contains(cellPosition);
 
     return InkWell(
       onTap: tickedCell || animationController.isAnimating || isComputerThinking
           ? null
           : () {
-              iPlayNotifier.tick(index, () async {
+              iPlayNotifier.tick(cellPosition, () async {
                 await animationController.repeat(reverse: true, count: 9);
               });
             },
@@ -55,7 +57,7 @@ class CellView extends ConsumerWidget {
         animation: animationController,
         builder: (context, child) {
           final double animationValue;
-          if (playState.getWinningIndexes().contains(index)) {
+          if (board.getWinningIndexes().contains(cellPosition)) {
             animationValue = animationController.value;
           } else {
             animationValue = 0;
@@ -86,8 +88,8 @@ class CellView extends ConsumerWidget {
                   ),
             child: Builder(
               builder: (context) {
-                final xTick = playState.xTicks.contains(index);
-                final oTick = playState.oTicks.contains(index);
+                final xTick = board.xPlayed.contains(cellPosition);
+                final oTick = board.oPlayed.contains(cellPosition);
                 if (xTick || oTick) {
                   return Center(
                     child: Transform.scale(

@@ -19,7 +19,7 @@ class GameScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final playState = againstAI ? ref.watch(playAINotifierProvider) : null;
+    final boardAsync = againstAI ? ref.watch(playAINotifierProvider) : null;
     return Scaffold(
       backgroundColor: ThemeColors.background,
       appBar: AppBar(
@@ -42,7 +42,7 @@ class GameScreen extends ConsumerWidget {
               SizedBox(height: ThemeSizes.m),
               PlayView(againstAI: againstAI),
               AppButton(
-                onPressed: playState?.isLoading == true
+                onPressed: boardAsync?.isLoading == true
                     ? null
                     : () {
                         if (againstAI) {
