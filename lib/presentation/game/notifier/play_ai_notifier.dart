@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:betclictactoe/presentation/game/notifier/game_notifier.dart';
 import 'package:betclictactoe/presentation/game/notifier/i_play_notifier.dart';
 import 'package:betclictactoe/presentation/game/notifier/play_state.dart';
@@ -18,6 +20,11 @@ class PlayAINotifier extends AsyncNotifier<PlayState> implements IPlayNotifier {
 
   @override
   Future<PlayState> build() async {
+    final gameState = ref.watch(gameNotifierProvider);
+    if (!gameState.isPlayingFirstWithX) {
+      final firstIndexAI = Random().nextInt(9);
+      return PlayState(xTicks: [firstIndexAI], oTicks: []);
+    }
     return PlayState(xTicks: [], oTicks: []);
   }
 
@@ -117,6 +124,4 @@ class PlayAINotifier extends AsyncNotifier<PlayState> implements IPlayNotifier {
       ),
     );
   }
-
-  void _winning() {}
 }
