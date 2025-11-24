@@ -1,12 +1,10 @@
 import 'package:betclictactoe/app/i18n/translations.g.dart';
 import 'package:betclictactoe/presentation/game/notifier/play_ai_notifier.dart';
-import 'package:betclictactoe/presentation/game/notifier/play_friend_notifier.dart';
 import 'package:betclictactoe/presentation/game/ui/play_view.dart';
 import 'package:betclictactoe/presentation/game/ui/score_view.dart';
 import 'package:betclictactoe/presentation/shared/theme/theme_colors.dart';
 import 'package:betclictactoe/presentation/shared/theme/theme_sizes.dart';
 import 'package:betclictactoe/presentation/shared/widgets/app_back_button.dart';
-import 'package:betclictactoe/presentation/shared/widgets/app_button.dart';
 import 'package:betclictactoe/presentation/shared/widgets/app_text.dart';
 import 'package:betclictactoe/utils/app_constants.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +17,6 @@ class GameScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final boardAsync = againstAI ? ref.watch(playAINotifierProvider) : null;
     return Scaffold(
       backgroundColor: ThemeColors.background,
       appBar: AppBar(
@@ -41,19 +38,6 @@ class GameScreen extends ConsumerWidget {
               ScoreView(againstAI: againstAI),
               SizedBox(height: ThemeSizes.m),
               PlayView(againstAI: againstAI),
-              AppButton(
-                onPressed: boardAsync?.isLoading == true
-                    ? null
-                    : () {
-                        if (againstAI) {
-                          ref.invalidate(playAINotifierProvider);
-                        } else {
-                          ref.invalidate(playFriendNotifierProvider);
-                        }
-                      },
-                text: t.gameScreen.restartButtonLabel,
-                icon: Icons.replay,
-              ),
             ],
           ),
         ),
