@@ -7,7 +7,7 @@ import 'package:betclictactoe/utils/log.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('board_test - isCellTicked', () {
+  group('board - isCellTicked', () {
     test('isCellTicked returns true when cell is in xPlayed', () {
       final target = const Cell(0, 0);
       final board = Board(xPlayed: [target], oPlayed: []);
@@ -29,7 +29,7 @@ void main() {
     });
   });
 
-  group('board_test - getWinningIndexes', () {
+  group('board - getWinningIndexes', () {
     test('getWinningIndexes returns winning positions when X has a win', () {
       final randomIndex = Random().nextInt(
         AppConstants.winningPositions.length,
@@ -91,7 +91,7 @@ void main() {
     });
   });
 
-  group('board_test - isFull', () {
+  group('board - isFull', () {
     test('isFull returns true when board is full', () {
       final board = Board(
         xPlayed: [
