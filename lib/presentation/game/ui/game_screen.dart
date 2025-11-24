@@ -1,5 +1,4 @@
 import 'package:betclictactoe/app/i18n/translations.g.dart';
-import 'package:betclictactoe/presentation/game/notifier/play_ai_notifier.dart';
 import 'package:betclictactoe/presentation/game/ui/play_view.dart';
 import 'package:betclictactoe/presentation/game/ui/score_view.dart';
 import 'package:betclictactoe/presentation/shared/theme/theme_colors.dart';

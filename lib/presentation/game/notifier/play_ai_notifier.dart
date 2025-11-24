@@ -1,7 +1,9 @@
 import 'dart:math';
 
+import 'package:betclictactoe/data/repository/play_repository.dart';
 import 'package:betclictactoe/domain/models/board.dart';
 import 'package:betclictactoe/domain/models/cell.dart';
+import 'package:betclictactoe/domain/repository/i_play_repository.dart';
 import 'package:betclictactoe/presentation/game/notifier/game_notifier.dart';
 import 'package:betclictactoe/presentation/game/notifier/i_play_notifier.dart';
 import 'package:betclictactoe/utils/log.dart';
@@ -13,6 +15,10 @@ final playAINotifierProvider =
     );
 
 class PlayAINotifier extends AsyncNotifier<Board> with IPlayNotifier {
+  late final IPlayRepository _playRepository = ref.watch(
+    playRepositoryProvider,
+  );
+
   @override
   Future<Board> build() async {
     final gameState = ref.watch(gameNotifierProvider);
@@ -56,8 +62,8 @@ class PlayAINotifier extends AsyncNotifier<Board> with IPlayNotifier {
       winningAnimationCallback,
     );
 
-    if (!somebodyWon) {
-      _startAIPlay(aiPlayingWithX: !mainPlayerPlayingX).then((_) {
+    if (!somebodyWon && !newBoard.isFull()) {
+      _playWithAI(aiPlayingWithX: !mainPlayerPlayingX).then((_) {
         handleWinning(
           ref,
           state.value!,
@@ -68,7 +74,7 @@ class PlayAINotifier extends AsyncNotifier<Board> with IPlayNotifier {
     }
   }
 
-  Future<void> _startAIPlay({required bool aiPlayingWithX}) async {
+  Future<void> _playWithAI({required bool aiPlayingWithX}) async {
     if (state.value == null) {
       logger.e('@aiPlay: Cannot play while in loading or error state');
       return;
@@ -77,31 +83,12 @@ class PlayAINotifier extends AsyncNotifier<Board> with IPlayNotifier {
 
     state = AsyncLoading();
 
-    final allCells = List<Cell>.generate(
-      9,
-      (index) => Cell(index ~/ 3, index % 3),
-    );
-    final takenCells = [...board.xPlayed, ...board.oPlayed];
-    final availableCells = allCells
-        .where((cell) => !takenCells.contains(cell))
-        .toList();
-
-    if (availableCells.isEmpty) {
-      return;
-    }
-
-    // Replace by repo
-    await Future.delayed(const Duration(milliseconds: 1000));
-    final aiCell = availableCells.first;
+    final aiCell = await _playRepository.getNextMove(board, aiPlayingWithX);
 
     state = AsyncData(
       Board(
-        xPlayed: aiPlayingWithX
-            ? [...board.xPlayed, aiCell]
-            : board.xPlayed,
-        oPlayed: aiPlayingWithX
-            ? board.oPlayed
-            : [...board.oPlayed, aiCell],
+        xPlayed: aiPlayingWithX ? [...board.xPlayed, aiCell] : board.xPlayed,
+        oPlayed: aiPlayingWithX ? board.oPlayed : [...board.oPlayed, aiCell],
       ),
     );
   }
