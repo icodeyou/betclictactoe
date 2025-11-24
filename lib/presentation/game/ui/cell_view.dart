@@ -48,7 +48,7 @@ class CellView extends ConsumerWidget {
           ? null
           : () {
               iPlayNotifier.tick(index, () async {
-                await animationController.repeat(reverse: true, count: 8);
+                await animationController.repeat(reverse: true, count: 9);
               });
             },
       child: AnimatedBuilder(
