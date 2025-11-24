@@ -1,5 +1,6 @@
 import 'package:betclictactoe/domain/models/board.dart';
 import 'package:betclictactoe/domain/models/cell.dart';
+import 'package:betclictactoe/presentation/game/notifier/game_notifier.dart';
 import 'package:betclictactoe/presentation/game/notifier/i_play_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -11,6 +12,7 @@ final playFriendNotifierProvider =
 class PlayFriendNotifier extends Notifier<Board> with IPlayNotifier {
   @override
   Board build() {
+    ref.watch(gameNotifierProvider); // Rebuild board when settings change
     return Board(xPlayed: [], oPlayed: []);
   }
 
