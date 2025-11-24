@@ -36,7 +36,7 @@ class GameScreen extends ConsumerWidget {
           padding: ThemeSizes.m.asInsets,
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            spacing: ThemeSizes.m,
+            spacing: ThemeSizes.xs,
             children: [
               ScoreView(againstAI: againstAI),
               SizedBox(height: ThemeSizes.m),
