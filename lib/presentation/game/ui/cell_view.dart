@@ -25,9 +25,11 @@ class CellView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final PlayState playState;
     final IPlayNotifier iPlayNotifier;
+    bool isComputerThinking = false;
     if (againstAI) {
       iPlayNotifier = ref.read(playAINotifierProvider.notifier);
       final playStateAsync = ref.watch(playAINotifierProvider);
+      isComputerThinking = playStateAsync.isLoading;
       if (playStateAsync.value == null) {
         logger.e('@build: playStateAsync.value is null');
         return const SizedBox.shrink();
@@ -38,17 +40,17 @@ class CellView extends ConsumerWidget {
       iPlayNotifier = ref.read(playFriendNotifierProvider.notifier);
       playState = ref.watch(playFriendNotifierProvider);
     }
-    final emptyCell =
-        !playState.xTicks.contains(index) && !playState.oTicks.contains(index);
+    final tickedCell =
+        playState.xTicks.contains(index) || playState.oTicks.contains(index);
 
     return InkWell(
-      onTap: emptyCell && !animationController.isAnimating
-          ? () {
+      onTap: tickedCell || animationController.isAnimating || isComputerThinking
+          ? null
+          : () {
               iPlayNotifier.tick(index, () async {
                 await animationController.repeat(reverse: true, count: 8);
               });
-            }
-          : null,
+            },
       child: AnimatedBuilder(
         animation: animationController,
         builder: (context, child) {
@@ -58,24 +60,29 @@ class CellView extends ConsumerWidget {
           } else {
             animationValue = 0;
           }
+
+          final cellColor =
+              isComputerThinking || animationController.isAnimating
+              ? ThemeColors.darkSecondary
+              : ThemeColors.secondary;
           return Container(
-            decoration: emptyCell
+            decoration: tickedCell
                 ? BoxDecoration(
+                    color: ThemeColors.secondary.withAlpha(
+                      (200 * animationValue).toInt(),
+                    ),
+                    shape: BoxShape.circle,
+                  )
+                : BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
                     gradient: RadialGradient(
                       // small offset from center
                       center: const Alignment(0.3, 0.3),
                       colors: [
-                        ThemeColors.secondary.withAlpha(20),
-                        ThemeColors.secondary.withAlpha(60),
+                        cellColor.withAlpha(20),
+                        cellColor.withAlpha(60),
                       ],
                     ),
-                  )
-                : BoxDecoration(
-                    color: ThemeColors.secondary.withAlpha(
-                      (200 * animationValue).toInt(),
-                    ),
-                    shape: BoxShape.circle,
                   ),
             child: Builder(
               builder: (context) {

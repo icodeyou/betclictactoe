@@ -64,33 +64,14 @@ class PlayAINotifier extends AsyncNotifier<PlayState> with IPlayNotifier {
     }
   }
 
-  /// Returns true if one player has won
-  // bool _handleWinning(
-  //   PlayState newPlayState,
-  //   bool isXTurn,
-  //   Future<void> Function() winningAnimationCallback,
-  // ) {
-  //   final winningIndexes = newPlayState.getWinningIndexes();
-  //   if (winningIndexes.isEmpty) {
-  //     _audioController.playSfx(isXTurn ? SfxType.xTick : SfxType.yTick);
-  //     return false;
-  //   }
-
-  //   _audioController.playSfx(SfxType.congrats);
-
-  //   winningAnimationCallback().then((_) {
-  //     _gameNotifier.incrementScore(isXTurn: isXTurn);
-  //     ref.invalidateSelf();
-  //   });
-  //   return true;
-  // }
-
   Future<void> _startAIPlay({required bool aiPlayingWithX}) async {
     if (state.value == null) {
       logger.e('@aiPlay: Cannot play while in loading or error state');
       return;
     }
     final playState = state.value!;
+
+    state = AsyncLoading();
 
     final allIndexes = List<int>.generate(9, (index) => index);
     final takenIndexes = [...playState.xTicks, ...playState.oTicks];
