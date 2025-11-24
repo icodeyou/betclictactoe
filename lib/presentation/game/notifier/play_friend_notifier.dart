@@ -11,9 +11,12 @@ final playFriendNotifierProvider =
     );
 
 class PlayFriendNotifier extends Notifier<PlayState> implements IPlayNotifier {
-  GameNotifier get _gameNotifier => ref.read(gameNotifierProvider.notifier);
-  AudioController get _audioController =>
-      ref.read(audioControllerProvider.notifier);
+  late final GameNotifier _gameNotifier = ref.read(
+    gameNotifierProvider.notifier,
+  );
+  late final AudioController _audioController = ref.read(
+    audioControllerProvider.notifier,
+  );
 
   @override
   PlayState build() {

@@ -14,9 +14,12 @@ final playAINotifierProvider =
     );
 
 class PlayAINotifier extends AsyncNotifier<PlayState> implements IPlayNotifier {
-  GameNotifier get _gameNotifier => ref.read(gameNotifierProvider.notifier);
-  AudioController get _audioController =>
-      ref.read(audioControllerProvider.notifier);
+  late final GameNotifier _gameNotifier = ref.read(
+    gameNotifierProvider.notifier,
+  );
+  late final AudioController _audioController = ref.read(
+    audioControllerProvider.notifier,
+  );
 
   @override
   Future<PlayState> build() async {
@@ -74,9 +77,7 @@ class PlayAINotifier extends AsyncNotifier<PlayState> implements IPlayNotifier {
   ) {
     final winningIndexes = newPlayState.getWinningIndexes();
     if (winningIndexes.isEmpty) {
-      ref
-          .read(audioControllerProvider.notifier)
-          .playSfx(isXTurn ? SfxType.xTick : SfxType.yTick);
+      _audioController.playSfx(isXTurn ? SfxType.xTick : SfxType.yTick);
       return false;
     }
 
