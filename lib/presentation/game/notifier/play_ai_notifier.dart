@@ -3,8 +3,6 @@ import 'dart:math';
 import 'package:betclictactoe/presentation/game/notifier/game_notifier.dart';
 import 'package:betclictactoe/presentation/game/notifier/i_play_notifier.dart';
 import 'package:betclictactoe/presentation/game/notifier/play_state.dart';
-import 'package:betclictactoe/presentation/shared/controller/audio_controller.dart';
-import 'package:betclictactoe/utils/audio/sounds.dart';
 import 'package:betclictactoe/utils/log.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,18 +11,13 @@ final playAINotifierProvider =
       () => PlayAINotifier(),
     );
 
-class PlayAINotifier extends AsyncNotifier<PlayState> implements IPlayNotifier {
-  late final GameNotifier _gameNotifier = ref.read(
-    gameNotifierProvider.notifier,
-  );
-  late final AudioController _audioController = ref.read(
-    audioControllerProvider.notifier,
-  );
-
+class PlayAINotifier extends AsyncNotifier<PlayState> with IPlayNotifier {
   @override
   Future<PlayState> build() async {
     final gameState = ref.watch(gameNotifierProvider);
     if (!gameState.isPlayingFirstWithX) {
+      // TODO : Call repo
+      await Future.delayed(const Duration(milliseconds: 500));
       final firstIndexAI = Random().nextInt(9);
       return PlayState(xTicks: [firstIndexAI], oTicks: []);
     }
@@ -52,7 +45,8 @@ class PlayAINotifier extends AsyncNotifier<PlayState> implements IPlayNotifier {
 
     state = AsyncData(newPlayState);
 
-    final somebodyWon = _handleWinning(
+    final somebodyWon = handleWinning(
+      ref,
       newPlayState,
       mainPlayerPlayingX,
       winningAnimationCallback,
@@ -60,7 +54,8 @@ class PlayAINotifier extends AsyncNotifier<PlayState> implements IPlayNotifier {
 
     if (!somebodyWon) {
       _startAIPlay(aiPlayingWithX: !mainPlayerPlayingX).then((_) {
-        _handleWinning(
+        handleWinning(
+          ref,
           state.value!,
           !mainPlayerPlayingX,
           winningAnimationCallback,
@@ -70,25 +65,25 @@ class PlayAINotifier extends AsyncNotifier<PlayState> implements IPlayNotifier {
   }
 
   /// Returns true if one player has won
-  bool _handleWinning(
-    PlayState newPlayState,
-    bool isXTurn,
-    Future<void> Function() winningAnimationCallback,
-  ) {
-    final winningIndexes = newPlayState.getWinningIndexes();
-    if (winningIndexes.isEmpty) {
-      _audioController.playSfx(isXTurn ? SfxType.xTick : SfxType.yTick);
-      return false;
-    }
+  // bool _handleWinning(
+  //   PlayState newPlayState,
+  //   bool isXTurn,
+  //   Future<void> Function() winningAnimationCallback,
+  // ) {
+  //   final winningIndexes = newPlayState.getWinningIndexes();
+  //   if (winningIndexes.isEmpty) {
+  //     _audioController.playSfx(isXTurn ? SfxType.xTick : SfxType.yTick);
+  //     return false;
+  //   }
 
-    _audioController.playSfx(SfxType.congrats);
+  //   _audioController.playSfx(SfxType.congrats);
 
-    winningAnimationCallback().then((_) {
-      _gameNotifier.incrementScore(isXTurn: isXTurn);
-      ref.invalidateSelf();
-    });
-    return true;
-  }
+  //   winningAnimationCallback().then((_) {
+  //     _gameNotifier.incrementScore(isXTurn: isXTurn);
+  //     ref.invalidateSelf();
+  //   });
+  //   return true;
+  // }
 
   Future<void> _startAIPlay({required bool aiPlayingWithX}) async {
     if (state.value == null) {
@@ -96,8 +91,6 @@ class PlayAINotifier extends AsyncNotifier<PlayState> implements IPlayNotifier {
       return;
     }
     final playState = state.value!;
-
-    state = AsyncLoading();
 
     final allIndexes = List<int>.generate(9, (index) => index);
     final takenIndexes = [...playState.xTicks, ...playState.oTicks];

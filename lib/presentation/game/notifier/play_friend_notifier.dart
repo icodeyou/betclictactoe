@@ -1,8 +1,5 @@
-import 'package:betclictactoe/presentation/game/notifier/game_notifier.dart';
 import 'package:betclictactoe/presentation/game/notifier/i_play_notifier.dart';
 import 'package:betclictactoe/presentation/game/notifier/play_state.dart';
-import 'package:betclictactoe/presentation/shared/controller/audio_controller.dart';
-import 'package:betclictactoe/utils/audio/sounds.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final playFriendNotifierProvider =
@@ -10,14 +7,7 @@ final playFriendNotifierProvider =
       () => PlayFriendNotifier(),
     );
 
-class PlayFriendNotifier extends Notifier<PlayState> implements IPlayNotifier {
-  late final GameNotifier _gameNotifier = ref.read(
-    gameNotifierProvider.notifier,
-  );
-  late final AudioController _audioController = ref.read(
-    audioControllerProvider.notifier,
-  );
-
+class PlayFriendNotifier extends Notifier<PlayState> with IPlayNotifier {
   @override
   PlayState build() {
     return PlayState(xTicks: [], oTicks: []);
@@ -32,19 +22,6 @@ class PlayFriendNotifier extends Notifier<PlayState> implements IPlayNotifier {
       oTicks: isXTurn ? state.oTicks : [...state.oTicks, index],
     );
 
-    final winningIndexes = state.getWinningIndexes();
-    if (winningIndexes.isEmpty) {
-      ref
-          .read(audioControllerProvider.notifier)
-          .playSfx(isXTurn ? SfxType.xTick : SfxType.yTick);
-      return;
-    }
-
-    _audioController.playSfx(SfxType.congrats);
-
-    winningAnimationCallback().then((_) {
-      _gameNotifier.incrementScore(isXTurn: isXTurn);
-      ref.invalidateSelf();
-    });
+    handleWinning(ref, state, isXTurn, winningAnimationCallback);
   }
 }
