@@ -39,9 +39,8 @@ class PlayFriendNotifier extends Notifier<PlayState> implements IPlayNotifier {
 
     _audioController.playSfx(SfxType.congrats);
 
-    _gameNotifier.incrementScore(isXTurn: isXTurn);
-
     winningAnimationCallback().then((_) {
+      _gameNotifier.incrementScore(isXTurn: isXTurn);
       ref.invalidateSelf();
     });
   }
