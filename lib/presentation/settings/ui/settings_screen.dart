@@ -3,6 +3,7 @@ import 'package:betclictactoe/presentation/settings/notifier/settings_notifier.d
 import 'package:betclictactoe/presentation/settings/ui/icon_line.dart';
 import 'package:betclictactoe/presentation/settings/ui/string_line.dart';
 import 'package:betclictactoe/presentation/shared/controller/audio_controller.dart';
+import 'package:betclictactoe/presentation/shared/keys/ui_keys.dart';
 import 'package:betclictactoe/presentation/shared/theme/theme_colors.dart';
 import 'package:betclictactoe/presentation/shared/theme/theme_font_sizes.dart';
 import 'package:betclictactoe/presentation/shared/theme/theme_sizes.dart';
@@ -24,7 +25,7 @@ class SettingsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        leading: AppBackButton(),
+        leading: AppBackButton(key: UIKeys.settingsScreenBackButton),
         title: AppText(
           t.settingsScreen.title,
           textAlign: TextAlign.center,

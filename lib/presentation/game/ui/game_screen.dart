@@ -1,6 +1,7 @@
 import 'package:betclictactoe/app/i18n/translations.g.dart';
 import 'package:betclictactoe/presentation/game/ui/play_view.dart';
 import 'package:betclictactoe/presentation/game/ui/score_view.dart';
+import 'package:betclictactoe/presentation/shared/keys/ui_keys.dart';
 import 'package:betclictactoe/presentation/shared/theme/theme_colors.dart';
 import 'package:betclictactoe/presentation/shared/theme/theme_sizes.dart';
 import 'package:betclictactoe/presentation/shared/widgets/app_back_button.dart';
@@ -19,7 +20,7 @@ class GameScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: ThemeColors.background,
       appBar: AppBar(
-        leading: AppBackButton(),
+        leading: AppBackButton(key: UIKeys.gameScreenBackButton),
         title: AppText(
           t.gameScreen.title,
           textAlign: TextAlign.center,
