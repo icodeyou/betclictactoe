@@ -1,6 +1,6 @@
 # BetclicTacToe
 
-This is the technical test project for Betclic.
+This is a technical test project, featuring a Tic Tac Toe game, where you can play against with a friend or an AI opponent.
 
 The target platforms are iOS and Android.
 
