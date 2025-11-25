@@ -36,12 +36,12 @@ class SettingsScreen extends ConsumerWidget {
       ),
       backgroundColor: ThemeColors.backgroundSettings,
       body: SafeArea(
-        child: Column(
-          spacing: 60,
-          children: [
-            Expanded(
-              child: Padding(
-                padding: ThemeSizes.xl.asInsets,
+        child: Padding(
+          padding: ThemeSizes.xl.asInsets,
+          child: Column(
+            spacing: 60,
+            children: [
+              Expanded(
                 child: ListView(
                   children: [
                     StringLine(
@@ -69,9 +69,9 @@ class SettingsScreen extends ConsumerWidget {
                   ],
                 ),
               ),
-            ),
-            AppText(t.settingsScreen.credits, fontSize: ThemeFontSizes.s),
-          ],
+              AppText(t.settingsScreen.credits, fontSize: ThemeFontSizes.s),
+            ],
+          ),
         ),
       ),
     );

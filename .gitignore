@@ -30,6 +30,7 @@
 #Delivery outputs
 /build/
 /ios/build/
+/android/build/
 
 # Symbols related
 app.*.symbols

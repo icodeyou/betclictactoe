@@ -8,6 +8,7 @@ import 'package:betclictactoe/presentation/shared/theme/theme_sizes.dart';
 import 'package:betclictactoe/presentation/shared/widgets/app_button.dart';
 import 'package:betclictactoe/presentation/shared/widgets/app_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MyApp extends ConsumerWidget {
@@ -64,6 +65,7 @@ class MyApp extends ConsumerWidget {
     return AppLifecycleObserver(
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
+        // light mode
         theme:
             ThemeData.from(
               colorScheme: ColorScheme.fromSeed(
@@ -74,7 +76,14 @@ class MyApp extends ConsumerWidget {
               ),
               useMaterial3: true,
             ).copyWith(
-              appBarTheme: AppBarTheme(backgroundColor: Colors.transparent),
+              appBarTheme: AppBarTheme(
+                systemOverlayStyle: SystemUiOverlayStyle(
+                  statusBarColor: Colors.transparent,
+                  statusBarIconBrightness: Brightness.dark,
+                ),
+                centerTitle: true,
+                backgroundColor: Colors.transparent,
+              ),
             ),
         routerConfig: router,
       ),

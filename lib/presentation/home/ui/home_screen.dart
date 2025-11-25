@@ -22,7 +22,8 @@ class HomeScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: ThemeColors.backgroundHome,
       body: SafeArea(
-        child: Center(
+        child: Padding(
+          padding: ThemeSizes.xl.asInsets,
           child: Column(
             spacing: ThemeSizes.xl,
             mainAxisSize: MainAxisSize.max,
