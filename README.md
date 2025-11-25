@@ -4,6 +4,8 @@ This is the technical test project for Betclic.
 
 The target platforms are iOS and Android.
 
+![Betclic TacToe](./BetclicTacToe.gif)
+
 ## Development
 
 To run the app, prepare your simulator or physical device, then run:
