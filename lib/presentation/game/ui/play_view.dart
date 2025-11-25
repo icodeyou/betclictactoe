@@ -44,6 +44,7 @@ class _PlayViewState extends ConsumerState<PlayView>
             children: List.generate(
               AppConstants.gridSize * AppConstants.gridSize,
               (i) => CellView(
+                key: Key('cell_view_$i'),
                 cellPosition: Cell(
                   i % AppConstants.gridSize,
                   i ~/ AppConstants.gridSize,
