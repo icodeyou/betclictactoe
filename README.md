@@ -1,12 +1,20 @@
 # BetclicTacToe
 
-This is a technical test project, featuring a Tic Tac Toe game, where you can play against with a friend or an AI opponent.
+This is a technical test project, featuring a **Tic Tac Toe** game for **Android** and **iOS**, where you can locally play with a **friend** or an **AI opponent**.
 
-The target platforms are iOS and Android.
+## Important note
+
+To give an overview of my coding skills, I needed to make a **fake API request** to fetch the AI opponent's move, which might seem overkill, but was necessary to highlight the three layers of **Clean Architecture**. I figured that it was also interesting to show how I was able to handle **asynchronous states** in the UI.
+
+To simulate this request, I added a **delay** in the repository, and implemented a simple algorithm. In the real world, I would probably implement the algorithm directly in the **domain layer**, and keep **synchronous code** in the UI.
+
+## Demo
 
 ![Betclic TacToe](./BetclicTacToe.gif)
 
 ## Development
+
+The target platforms are iOS and Android.
 
 To run the app, prepare your simulator or physical device, then run:
 
